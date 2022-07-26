@@ -10,6 +10,12 @@ To start using this plugin clone current repo in the directory with your project
 git clone https://github.com/ostis-ai/scn-latex-plugin
 ```
 
+You can also use it with Docker.
+
+```sh
+docker run -v </abspath/to/project/folder>:/workdir -it --rm ostis/ostis-standard <main .tex-file name>
+```
+
 ### Example
 
 ```tex
