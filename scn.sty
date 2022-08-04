@@ -1,15 +1,13 @@
-\NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{scn}
-  [2011/01/11 v0.01 LaTeX package for my own purpose]
+\NeedsTeXFormat{LaTeX2e}[2021-06-01]
+\ProvidesPackage{scn-latex-plugin/scn}
+  [2022/07/26 v0.1.0 LaTeX package for SCn-code support]
 
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T2A]{fontenc}
+\RequirePackage[russian]{babel}
 %DEFINES START
 
-\newcommand{\showfont}{encoding: \f@encoding{},
-  family: \f@family{},
-  series: \f@series{},
-  shape: \f@shape{},
-  size: \f@size{}
-}
+\newcommand{\showfont}{encoding: \f@encoding{}, family: \f@family{}, series: \f@series{}, shape: \f@shape{}, size: \f@size{}}
 
 \newcommand\tabsize{3em}
 
@@ -38,7 +36,7 @@
 \setlength{\arrowsize}{1em}
 
 \newlength{\arrowsizevar}
-\setlength{\arrowsizevar}{1.5em}
+\setlength{\arrowsizevar}{1.7em}
 
 \newlength{\bulletsize}
 \setlength{\bulletsize}{0.5em}
@@ -67,17 +65,59 @@
 \newlength{\toclineskip}
 \setlength{\toclineskip}{\baselineskip}
 
+\newlength\afterparlength
+\setlength{\afterparlength}{-2em}
+
+\newlength\afterseglength
+\setlength{\afterseglength}{-1em}
+
+\newcounter{hind}
+% seg counter is used to set two bigskips after the first segment in section
+% Maybe we should remove it
+\newcounter{seg}
+
+% Create line with dots
+\newcommand{\filldots}{\xleaders\hbox{*}\hfill}
+
 \newcommand{\scnsupergroupsign}{\textasciicircum}
 \newcommand{\scnrolesign}{\,$^\prime$}
 
-\newcommand{\sethind}{\setlength{\hangindent}{\dimexpr (\tabsize)*\value{hind} \relax} }
-\newcommand{\sethindfromind}[1]{\setcounter{\hind}{\numexpr (\value{ind}+#1 \relax} }
-\newcommand{\calctab}{\dimexpr (\tabsize)*\value{ind} \relax}
+\newcommand{\calctab}{\dimexpr (\tabsize)*\value{hind} \relax}
 \newcommand{\settab}{\hspace{\calctab}}
+\newcommand{\sethind}{\setlength{\hangindent}{\calctab} }
 \newcommand{\calcdiff}[1]{\dimexpr \tabsize-#1  \relax}
 \newcommand{\makediff}[1]{\hspace{\calcdiff{#1}}}
 
+\RequirePackage{microtype}
 \newcommand{\textspaced}[1]{\textls[200]{#1}}
+
+\newcommand{\scnaddhind}[1]{
+\addtocounter{hind}{#1}}
+
+\newcommand{\scnfileshort}[1]{
+{\normalfont [#1]}
+}
+
+\RequirePackage{amsmath,bm}
+
+\newcommand{\scnstartstruct}{\settab$\pmb{=\{}$\\}
+
+\newcommand{\scnstartsubstruct}{\settab$\pmb{\supset=\{}$\\}
+
+\newcommand{\scnstartset}{\settab$\pmb{\{}$}
+
+\newcommand{\scnstartsetlocal}{$\pmb{\{}$}
+
+\newcommand{\scnstructinclusion}{\settab$\pmb{\supset=}$\\}
+
+\newcommand{\scnendstruct}{\settab$\pmb{\}}$}
+
+\newcommand{\scnendstructlocal}{$\pmb{\}}$}
+
+\newcommand{\scnstartfile}{\settab\textbf{=}\\
+\settab\textbf{[}\\}
+
+\newcommand{\scnendfile}{\settab\textbf{]}}
 
 %DEFINES END
 
@@ -123,30 +163,26 @@
 
 %SCN START
 
-\RequirePackage{calc}
 
 \newif\iffilemode
 \filemodefalse
 
 \makeatletter
 
-\newcommand*{\trim}[1]{%
-  \trim@spaces@noexp{#1}%
-}
-
-\newcounter{ind}
-\newcounter{hind}
-\newcounter{seg}
-\newcounter{list_depth}
-
 \newenvironment{SCn}{
-\setcounter{ind}{0}
 \setcounter{hind}{0} 
-\setcounter{list_depth}{0}
 \begin{flushleft}
 }
 {
 \end{flushleft}
+}
+
+\newcommand{\scnaddlevel}[1]{
+\addtocounter{hind}{#1}
+}
+
+\newcommand{\scnresetlevel}{
+\setcounter{hind}{0}
 }
 
 \newcommand{\scnheader}[1]{\scnresetlevel\sethind~\vspace{\parskip}\\
@@ -165,173 +201,166 @@
 
 \newcommand{\scnsectionheader}[1]{\setcounter{seg}{0} \textspaced{\scnheader{\large #1}}}
 
+\makeatletter
+\newcommand{\scnsegmentcaption}{\normalfont \bfseries /*~\textspaced{Сегмент}~\filldots/\hspace{\textwidth}\normalfont\vspace{\afterseglength}}
+\makeatother
+
 \newcommand{\scnsegmentheader}[1]{
 \addtocounter{seg}{1}
 \ifnum\value{seg}>1
-%\newpage
 \bigskip
 \bigskip
 \else
 \bigskip
 \fi
-\scnsegmentcaption \textspaced{\scnheader{#1}}
+\scnsegmentcaption
+\textspaced{\scnheader{#1}}
 }
-
-\newcommand{\scnfragmentheader}[1]{
-\bigskip
-\scnfragmentcaption \textspaced{\scnheader{#1}}
-}
-
-\newcommand{\scnsegmentheaderbeginning}[1]{
-	\addtocounter{seg}{1}
-	\ifnum\value{seg}>1
-%	\newpage
-	\bigskip
-	\else
-	\bigskip
-	\fi
-	\scnsegmentcaptionbeginning \textspaced{\scnheader{#1}}
-}
-
-\newcommand{\scnfragmentcaptiontext}[1]{
-\begin{adjustwidth}{\commentsize}{0.5\textwidth+\commentsize}
-	\justify
-	\setlength{\parskip}{0.5em}
-	\hspace{-\commentsize}\bfseries /*~#1~\filldots/\normalfont	
-\end{adjustwidth}}
-
-\newcommand{\scnfragmentcaption}{\bfseries /*\filldots/\hspace{\textwidth}\normalfont\vspace{\afterseglength}}
-
-\makeatletter
-\newcommand{\scnsegmentcaption}{\normalfont \bfseries /*~\textspaced{Сегмент}~\filldots/\hspace{\textwidth}\normalfont\vspace{\afterseglength}}
-\makeatother
-
-\NewDocumentCommand\scnlist{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnlistitem}}
-
-\NewDocumentCommand\scnrellist{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnrellistitem}}
-
-\NewDocumentCommand\scnrolerellist{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnrolerellistitem}}
-   
-\NewDocumentCommand\scnvarrellist{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnvarrellistitem}}
-   
-\NewDocumentCommand\scnvarrolerellist{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnvarrolerellistitem}}
-
-\NewDocumentCommand\scnfilelist{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnfilelistitem}}
-
-\NewDocumentCommand\scnlistbrackets{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnlistitembrackets}}
-
-\NewDocumentCommand\scnfilelistbrackets{>{\SplitList{;}}m}
-   {\ProcessList{#1}{\scnfilelistitembrackets}}
 
 \newcommand\scnlistitem[1]{
 \sethind
 \settab{$\bullet$\makediff{\bulletsize}\itshape#1} \\
 }
 
-\newcommand\scnvarrellistitem[1]{{\textit{#1}*{\normalfont::~}}}
-
-\newcommand\scnvarrolerellistitem[1]{{\textit{#1}\scnrolesign{\normalfont::~}}}
+\NewDocumentCommand\scnlist{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnlistitem}}
 
 \newcommand\scnrellistitem[1]{{\textit{#1}*{\normalfont:~}}}
 
+\NewDocumentCommand\scnrellist{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnrellistitem}}
+
 \newcommand\scnrolerellistitem[1]{{\textit{#1}\scnrolesign{\normalfont:~}}}
+
+\NewDocumentCommand\scnrolerellist{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnrolerellistitem}}
+ 
+\newcommand\scnvarrellistitem[1]{{\textit{#1}*{\normalfont::~}}}  
+
+\NewDocumentCommand\scnvarrellist{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnvarrellistitem}}
+   
+\newcommand\scnvarrolerellistitem[1]{{\textit{#1}\scnrolesign{\normalfont::~}}}
+
+\NewDocumentCommand\scnvarrolerellist{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnvarrolerellistitem}}
+
+\RequirePackage{calc}
+\RequirePackage{changepage}
+\RequirePackage{ragged2e}
+
+\newcommand\scnfilelistitem[1]{
+\begin{adjustwidth}{\calctab+\tabsize+\bracketsize}{0em}
+\justify
+\setlength{\parskip}{0.5em}
+\hspace{-\tabsize}\hspace{-\bracketsize}
+\normalfont$\bullet$\makediff{\bracketsize}[#1]
+\setlength{\parskip}{\baselineskip}
+\end{adjustwidth}
+}
+
+\NewDocumentCommand\scnfilelist{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnfilelistitem}}
 
 \newcommand\scnlistitembrackets[1]{
 \sethind
-\settab\hspace{0.2em}\hspace{\bracketsize}{$\bullet$\makediff{\bulletbracketsize}\itshape#1}\\
+\settab\hspace{\bulletbracketsize}
+{$\bullet$\makediff{\bulletbracketsize}\itshape#1}\\
 }
+
+\NewDocumentCommand\scnlistbrackets{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnlistitembrackets}}
 
 \newcommand\scnfilelistitembrackets[1]{
-\addtocounter{hind}{1}
+\scnaddlevel{1}
 \begin{adjustwidth}{\calctab+\tabsize+\bracketsize}{0em}
 \justify
 \setlength{\parskip}{0.5em}
-\hspace{-\tabsize}\hspace{0.2em}\normalfont$\bullet$\makediff{\bulletbracketsize}[#1]
+\hspace{-\tabsize}\hspace{0.2em}
+\normalfont$\bullet$\makediff{\bulletbracketsize}[#1]
 \setlength{\parskip}{\baselineskip}
 \end{adjustwidth}
-\addtocounter{hind}{-1}
+\scnaddlevel{-1}
 }
 
-\newcommand\scnfilelistitem[1]{
-\addtocounter{hind}{1}
-\begin{adjustwidth}{\calctab+\tabsize+\bracketsize}{0em}
+\NewDocumentCommand\scnfilelistbrackets{>{\SplitList{;}}m}
+   {\ProcessList{#1}{\scnfilelistitembrackets}}
+
+\newcommand{\scnfilelong}[1]{
+\begin{adjustwidth}{\calctab+0.4em}{0em}
 \justify
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{0em}
 \setlength{\parskip}{0.5em}
-\hspace{-\tabsize}\hspace{-\bracketsize}\normalfont$\bullet$\makediff{\bulletsize}[#1]
-\setlength{\parskip}{\baselineskip}
+\hspace{-0.4em}\normalfont \textbf{[}#1\textbf{]}
 \end{adjustwidth}
-\addtocounter{hind}{-1}
 }
 
 \newcommand\scnfileitem[1]{\scnaddlevel{1}\scnfilelong{#1}\scnaddlevel{-1}}
 
+\RequirePackage{tabularx}
+\RequirePackage{graphicx}
+\RequirePackage{colortbl}
+
+\newcommand{\scnfilescg}[1]{
+\begin{adjustwidth}{\calctab}{0em}
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{0em}
+\setlength{\parskip}{0.5em}
+\normalfont \textbf{[}
+\cellcolor{white}
+\begin{center}
+\includegraphics[width=(\textwidth-\calctab)]{#1}
+\end{center}
+\textbf{]}
+\end{adjustwidth}
+}
+
 \newcommand\scgfileitem[1]{\scnaddlevel{1}\scnfilescg{#1}\scnaddlevel{-1}}
 
 \newcommand{\scnrelfrom}[2]{
-\settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\sethindfromind{1}
+\settab$\bm{\Rightarrow}$\hspace{\tabsize-\arrowsize}\scnrellist{#1}\\
+\scnaddlevel{1}
 \sethind
-\settab{\itshape#2}\\
-\addtocounter{ind}{-1}
-\sethindfromind{1}
+\settab{\itshape#2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnrelsuperset}[2]{
-\settab$\bm{\supset}$\makediff{\supsetsize}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\sethindfromind{1}
+\settab$\bm{\supset}$\hspace{\tabsize-\supsetsize}\scnrellist{#1}\\
+\scnaddlevel{1}
 \sethind
-\settab{\itshape#2}\\
-\addtocounter{ind}{-1}
-\sethindfromind{1}
+\settab{\itshape#2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnvarrelfrom}[2]{
 	\settab\textunderscore$\bm{\Rightarrow}$\makediff{\arrowsizevar}\scnvarrellist{#1}\\
-	\addtocounter{ind}{1}
-	\sethindfromind{1}
+	\scnaddlevel{1}
 	\sethind
-	\settab{\itshape #2}\\
-	\addtocounter{ind}{-1}
-	\sethindfromind{1}
+	\settab{\itshape #2}
+	\scnaddlevel{-1}
 }
 
 \newcommand{\scnrelto}[2]{
 \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\sethindfromind{1}
+\scnaddlevel{1}
 \sethind 
-\settab{\itshape #2}\\
-\addtocounter{ind}{-1}
-\sethindfromind{1}
+\settab{\itshape #2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnvarrelto}[2]{
 \settab\textunderscore$\bm{\Leftarrow}$\makediff{\arrowsizevar}\scnvarrellist{#1}\\
-\addtocounter{ind}{1}
-\sethindfromind{1}
+\scnaddlevel{1}
 \sethind 
-\settab{\itshape #2}\\
-\addtocounter{ind}{-1}
-\sethindfromind{1}
+\settab{\itshape #2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnrelfromlist}[2]{
 \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
-\addtocounter{list_depth}{1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{1}
-\fi
+\scnaddlevel{1}
 \sethind 
 
 \iffilemode
@@ -340,22 +369,12 @@
 \scnlist{#2}
 \fi
 
-\addtocounter{ind}{-1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{-1}
-\fi
-\addtocounter{list_depth}{-1}
-\addtocounter{hind}{-1}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnreltolist}[2]{
 \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
-\addtocounter{list_depth}{1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{1}
-\fi
+\scnaddlevel{1}
 \sethind 
 
 \iffilemode
@@ -364,28 +383,20 @@
 \scnlist{#2}
 \fi
 
-\addtocounter{ind}{-1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{-1}
-\fi
-\addtocounter{list_depth}{-1}
-\addtocounter{hind}{-1}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnrelboth}[2]{
 \settab$\bm{\Leftrightarrow}$\makediff{\arrowsize}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
+\scnaddlevel{1}
 \sethind 
 \settab{\itshape #2} \\
-\addtocounter{hind}{-1}
-\addtocounter{ind}{-1}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnrelbothlist}[2]{
 \settab$\bm{\Leftrightarrow}$\makediff{\arrowsize}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{2}
+\scnaddlevel{1}
 \sethind 
 
 \iffilemode
@@ -394,19 +405,12 @@
 \scnlist{#2}
 \fi
 
-\addtocounter{ind}{-1}
-\addtocounter{hind}{-2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnrelfromcommonset}[4]{
 \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrellist{#3}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
-\addtocounter{list_depth}{1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{1}
-\fi
-\sethind 
+\scnaddlevel{1}
 
 \settab#1\\
 \iffilemode
@@ -418,26 +422,14 @@
 \fi
 \settab#2\\
 
-\addtocounter{ind}{-1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{-1}
-\fi
-\addtocounter{list_depth}{-1}
-\addtocounter{hind}{-1}
-}
-
+\scnaddlevel{-1}
 \newcommand{\scnrelfromset}[2]{\scnrelfromcommonset{$\pmb{\{}$}{$\pmb{\}}$}{#1}{#2}}
 
 \newcommand{\scnrelfromvector}[2]{\scnrelfromcommonset{$\pmb{\langle}$}{$\pmb{\rangle}$}{#1}{#2}}
 
 \newcommand{\scnreltocommonset}[4]{
 \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrellist{#3}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
-\addtocounter{list_depth}{1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{1}
-\fi
+\scnaddlevel{1}
 \sethind 
 
 \settab#1\\
@@ -450,12 +442,7 @@
 \fi
 \settab#2\\
 
-\addtocounter{ind}{-1}
-\ifnum\value{list_depth}=1
-	\addtocounter{hind}{-1}
-\fi
-\addtocounter{list_depth}{-1}
-\addtocounter{hind}{-1}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnreltoset}[2]{\scnreltocommonset{$\pmb{\{}$}{$\pmb{\}}$}{#1}{#2}}
@@ -463,22 +450,54 @@
 \newcommand{\scnreltovector}[2]{\scnreltocommonset{$\pmb{\langle}$}{$\pmb{\rangle}$}{#1}{#2}}
 
 \newcommand{\scneq}[1]{
-\addtocounter{hind}{1}
 \sethind 
 \settab$\bm{=}$\makediff{\eqsize}{\itshape #1}\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scneqfile}[1]{
 \settab$\bm{=}$\\ 
-\vspace{0.5\baselineskip}
 \scnfilelong{#1}
+}
+
+\newcommand{\scnfileimage}[1]{
+\begin{adjustwidth}{\calctab}{0em}
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{0em}
+\setlength{\parskip}{0.5em}
+\vspace{-1.5em}
+\normalfont \textbf{[}
+\setlength\arrayrulewidth{1pt}
+\hspace{0.1em}
+\begin{tabularx}{\textwidth-\calctab}{X}
+\cellcolor{white}
+\begin{center}
+\vspace{-1.3\baselineskip}#1
+\vspace{-0.7\baselineskip}
+\end{center}
+\end{tabularx}
+\textbf{]}
+\end{adjustwidth}
 }
 
 \newcommand{\scneqimage}[1]{
 \settab$\bm{=}$\\ 
 \vspace{0.5\baselineskip}
 \scnfileimage{#1}
+}
+
+\RequirePackage[table]{xcolor}
+
+\newcommand{\scnfiletable}[1]{
+\begin{adjustwidth}{\calctab}{0em}
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{0em}
+\setlength{\parskip}{0.5em}
+\vspace{-1.5em}
+\normalfont \textbf{[}
+\rowcolors{1}{white}{white}
+#1
+\textbf{]}
+\end{adjustwidth}
 }
 
 \newcommand{\scneqtable}[1]{
@@ -493,18 +512,17 @@
 \scnfilescg{#1}
 }
 
+\newcommand{\scnfileclass}[1]{
+{\normalfont\hspace{-0.3em}![~#1~]!}
+}
+
 \newcommand{\scneqfileclass}[1]{
 \settab$\bm{=}$\makediff{\eqsize}\scnfileclass{#1}\\
 }
 
 \newcommand{\scneqtocommonset}[3]{
 \settab$\bm{=}$\makediff{\eqsize}#1\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
-\addtocounter{list_depth}{1}
-\ifnum\value{list_depth}=1
-\addtocounter{hind}{1}
-\fi
+\scnaddlevel{1}
 \sethind 
 
 \iffilemode
@@ -516,12 +534,7 @@
 \fi
 \settab#2\\
 
-\addtocounter{ind}{-1}
-\ifnum\value{list_depth}=1
-\addtocounter{hind}{-1}
-\fi
-\addtocounter{list_depth}{-1}
-\addtocounter{hind}{-1}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scneqtoset}[1]{\scneqtocommonset{$\pmb{\{}$}{$\pmb{\}}$}{#1}}
@@ -530,8 +543,7 @@
 
 \newcommand{\scnhassubstruct}[1]{
 \settab$\bm{\supset=}$\makediff{\substructsize}$\pmb{\{}$\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{2}
+\scnaddlevel{1}
 \sethind 
 \iffilemode
 \vspace{-1.55\baselineskip}
@@ -541,55 +553,42 @@
 \scnlistbrackets{#1}
 \fi
 \settab$\pmb{\}}$\\
-\addtocounter{ind}{-1}
-\addtocounter{hind}{-2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnsubset}[1]{
-\addtocounter{hind}{1}
 \sethind 
 \settab$\bm{\subset}$\makediff{\subsetsize}{\itshape #1}\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnnotsubset}[1]{
-\addtocounter{hind}{1}
 \sethind 
 \settab$\bm{\not\subset}$\makediff{\subsetsize}{\itshape #1}\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnsuperset}[1]{
-\addtocounter{hind}{1}
 \sethind 
 \settab$\bm{\supset}$\makediff{\supsetsize}{\itshape #1}\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scniselement}[1]{
-\addtocounter{hind}{1}
 \sethind
 \settab$\bm{\in}$\hspace{\calcdiff{\insize}}{\itshape #1}\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnisvarelement}[1]{
-	\addtocounter{hind}{1}
 	\sethind
 	\settab\textunderscore$\bm{\in}$\makediff{\insizevar}{\itshape #1}\\
-	\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnmakecommonsetlocal}[3]{
+\scnaddlevel{1}
+\settab
 \hspace{-\bracketsize}#1\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{2}
-\sethind 
 \vspace{-1\baselineskip}
 \scnlistbrackets{#3}
 \settab#2\\
-\addtocounter{ind}{-1}
-\addtocounter{hind}{-2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnmakesetlocal}[1]{\scnmakecommonsetlocal{$\pmb{\{}$}{$\pmb{\}}$}{#1}}
@@ -605,84 +604,68 @@
 }
 
 \newcommand{\scnhaselementset}[1]{
-\settab$\bm{\ni}$\makediff{\nisize}\scnmakesetlocal{#1}
+\settab$\bm{\ni}$\makediff{5em}\scnmakesetlocal{#1}
 }
 
 \newcommand{\scnhaselementvector}[1]{
-\settab$\bm{\ni}$\makediff{\nisize}\scnmakevectorlocal{#1}
+\settab$\bm{\ni}$\makediff{5em}\scnmakevectorlocal{#1}
 }
 
 \newcommand{\scnhaselement}[1]{
-\addtocounter{hind}{1}
 \sethind 
 \settab$\bm{\ni}$\makediff{\nisize}{\itshape #1}\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnhasvarelement}[1]{
-\addtocounter{hind}{1}
 \sethind 
 \settab\textunderscore$\bm{\ni}$\makediff{\nisizevar}{\itshape #1}\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnhaselements}[1]{
-\addtocounter{hind}{1}
 \sethind 
 \settab$\bm{\ni}$\makediff{\nisize}#1\\
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnsubdividing}[1]{\scnrelfromset{разбиение}{#1}}
 
 \newcommand{\scnhaselementrole}[2]{
 \settab$\bm{\ni}$\makediff{\nisize}\scnrolerellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
+\scnaddlevel{1}
 \sethind 
 \settab{\itshape #2}\\
-\addtocounter{ind}{-1}
-\addtocounter{hind}{-1}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnhasvarelementrole}[2]{
 	\settab\textunderscore$\bm{\ni}$\makediff{\nisizevar}\scnvarrolerellist{#1}\\
-	\addtocounter{ind}{1}
-	\addtocounter{hind}{1}
+    \scnaddlevel{1}
 	\sethind 
 	\settab{\itshape #2}\\
-	\addtocounter{ind}{-1}
-	\addtocounter{hind}{-1}
+	\scnaddlevel{-1}
 }
 
 \newcommand{\scnhaselementlist}[2]{
 \settab$\bm{\ni}$\makediff{\nisize}\scnrolerellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{2}
+\scnaddlevel{1}
 \sethind 
 \scnlist{#2}
-\addtocounter{ind}{-1}
-\addtocounter{hind}{-2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scniselementrole}[2]{
 \settab$\bm{\in}$\makediff{\insize}\scnrolerellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{1}
+\scnaddlevel{1}
 \sethind 
 \settab{\itshape #2}\\
-\addtocounter{ind}{-1}
-\addtocounter{hind}{-1}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scniselementlist}[2]{
 \settab$\bm{\in}$\makediff{\nisize}\scnrolerellist{#1}\\
-\addtocounter{ind}{1}
-\addtocounter{hind}{2}
+\scnaddlevel{1}
 \sethind 
 \scnlist{#2}
-\addtocounter{ind}{-1}
-\addtocounter{hind}{-2}
+\scnaddlevel{-1}
 }
 
 \newcommand{\scnrole}[1]{{\itshape #1\scnrolesign}:}
@@ -690,8 +673,9 @@
 \newcommand{\scnset}[1]{$\pmb{\{}$#1$\pmb{\}}$}
 \newcommand{\scnvector}[1]{$\pmb{\langle}$#1$\pmb{\rangle}$}
 
+\RequirePackage{mathtools}
+
 \newcommand{\scnidtf}[1]{
-\addtocounter{hind}{1}
 \begin{adjustwidth}{\calctab+\tabsize+\bracketsize}{0em}
 \justify
 \setlength{\parindent}{0em}
@@ -700,49 +684,16 @@
 \vspace{-0.4\baselineskip}
 \hspace{-\tabsize}\hspace{-\bracketsize}\normalfont$\bm{\coloneqq}$\makediff{\idtfsize}[#1]
 \end{adjustwidth}
-\addtocounter{hind}{-1}
 }
 
 \newcommand{\scnidtftext}[2]{
 \settab$\bm{\coloneqq}$\hspace{\calcdiff{\idtfsize}}\scnrellist{#1}\\
-\addtocounter{ind}{1}
-\settab{\scnfilelong{#2}}\\
-\addtocounter{ind}{-1}
+\settab\scnfilelong{#2}
 }
 
 \newcommand{\scnidtfdef}[1]{\scnidtftext{определение}{#1}}
 
 \newcommand{\scnidtfexp}[1]{\scnidtftext{пояснение}{#1}}
-
-\newcommand{\scnaddlevel}[1]{
-\addtocounter{ind}{#1}
-\addtocounter{hind}{#1}}
-
-\newcommand{\scnaddhind}[1]{
-\addtocounter{hind}{#1}}
-
-\newcommand{\scnresetlevel}{
-\setcounter{ind}{0}
-\setcounter{hind}{0}}
-
-\newcommand{\scnfileshort}[1]{
-{\normalfont [#1]}
-}
-
-\newcommand{\scnfileclass}[1]{
-{\normalfont\hspace{-0.3em}![~#1~]!}
-}
-
-\newcommand{\scnfilelong}[1]{
-\begin{adjustwidth}{\calctab+0.4em}{0em}
-\justify
-\setlength{\parindent}{0em}
-\setlength{\itemindent}{0em}
-\setlength{\parskip}{0.5em}
-\vspace{-1.5em}
-\hspace{-0.4em}\normalfont \textbf{[}#1\textbf{]}
-\end{adjustwidth}
-}
 
 \newcommand{\scnexternalfile}[1]{
 \begin{adjustwidth}{\calctab+0.4em}{0em}
@@ -750,53 +701,7 @@
 \setlength{\parindent}{0em}
 \setlength{\itemindent}{0em}
 \setlength{\parskip}{0.5em}
-\vspace{-1.5em}
 \normalfont#1
-\end{adjustwidth}
-}
-
-\RequirePackage{tabularx}
-
-\newcommand{\scnfileimage}[1]{
-\begin{adjustwidth}{\calctab}{0em}
-\setlength{\parindent}{0em}
-\setlength{\itemindent}{0em}
-\setlength{\parskip}{0.5em}
-\vspace{-1.5em}
-\normalfont \textbf{[}
-\setlength\arrayrulewidth{1pt}
-\hspace{0.1em}\begin{tabularx}{\textwidth-\calctab}{X}
-\cellcolor{white}\begin{center}\vspace{-1.3\baselineskip}#1\vspace{-0.7\baselineskip}\end{center}
-\end{tabularx}
-\textbf{]}
-\end{adjustwidth}
-}
-
-\newcommand{\scnfiletable}[1]{
-\begin{adjustwidth}{\calctab}{0em}
-\setlength{\parindent}{0em}
-\setlength{\itemindent}{0em}
-\setlength{\parskip}{0.5em}
-\vspace{-1.5em}
-\normalfont \textbf{[}
-\rowcolors{1}{white}{white}
-#1
-\textbf{]}
-\end{adjustwidth}
-}
-
-\newcommand{\scnfilescg}[1]{
-\begin{adjustwidth}{\calctab}{0em}
-\setlength{\parindent}{0em}
-\setlength{\itemindent}{0em}
-\setlength{\parskip}{0.5em}
-\vspace{-1.5em}
-\normalfont \textbf{[}
-\setlength\arrayrulewidth{1pt}
-\hspace{0.1em}\begin{tabularx}{\textwidth-\calctab}{X}
-\cellcolor{white}\begin{center}\vspace{-1.3\baselineskip}\includegraphics[scale=0.8]{#1}\vspace{-0.7\baselineskip}\end{center}
-\end{tabularx}
-\textbf{]}
 \end{adjustwidth}
 }
 
@@ -805,46 +710,22 @@
 		\setlength{\parindent}{0em}
 		\setlength{\itemindent}{0em}
 		\setlength{\parskip}{0.5em}
-		\vspace{-1.5em}
 		\normalfont \textbf{[}
 		#1
 		\textbf{]}
 	\end{adjustwidth}
 }
 
-\newcommand{\scnstartsubstruct}{
-\settab$\pmb{\supset=}$\\
-\settab$\pmb{\{}$
-}
-
-\newcommand{\scnstructinclusion}{
-\settab$\pmb{\supset=}$\\
-}
-
-\newcommand{\scnstartstruct}{\settab$\pmb{=\{}$}
-\newcommand{\scnstartset}{\settab$\pmb{\{}$}
-\newcommand{\scnstartsetlocal}{$\pmb{\{}$}
-\newcommand{\scnendstruct}{\settab$\pmb{\}}$}
-
-\newcommand{\scnendstructlocal}{$\pmb{\}}$}
-
-\newcommand{\scnstartfile}{\settab\textbf{=}\\
-\settab\textbf{[}\\}
-
-\newcommand{\scnendfile}{\settab\textbf{]}}
-
-
-\newcommand{\scnfilelongbreaks}[1]
-{\scnfilelong{\\#1\\}}
+\newcommand{\scnfilelongbreaks}[1]{\scnfilelong{\\#1\\}}
 
 \newcommand{\scntext}[2]{
 \scnrelfrom{#1}{\scnfilelong{#2}}
 }
 
-\newcommand{\scneqhierstruct}{
-\settab$\pmb{=}$\\ $\pmb{\langle|}$}
+\newcommand{\scneqhierstruct}{\settab$\pmb{=}$\\ $\pmb{\langle|}$}
 
 \newcommand{\scnstarthierstruct}{\settab$\pmb{\langle|}$}
+
 \newcommand{\scnendhierstruct}{\settab$\pmb{|\rangle}$}
 
 \newcommand{\scncomment}[1]{
@@ -911,58 +792,6 @@
 \scnrelfromlist{редактор}{#1}
 }
 
-\newcommand{\scnsourcecomment}[1]{{\normalfont \normalsize \textbf{/*~}#1\textbf{{}~*/}}}
-
-\newcommand{\scnsourcecommentpar}[1]{
-\begin{adjustwidth}{\calctab+1em}{0em}
-\justify
-\setlength{\parindent}{0em}
-\setlength{\itemindent}{0em}
-\hspace{-1em}\normalfont /*~#1{}~*/
-\end{adjustwidth}
-}
-
-\newcommand{\scninlinesourcecommentpar}[1]{
-\begin{adjustwidth}{\calctab+1em+\tabsize}{0em}
-\justify
-\setlength{\parindent}{0em}
-\setlength{\itemindent}{0em}
-\vspace{-0.9\baselineskip}
-\hspace{-1em}\normalfont /*~#1{}~*/
-\end{adjustwidth}
-}
-
-\makeatletter
-\newcommand{\scnendcurrentsectioncomment}{
-\scninlinesourcecommentpar{Завершили Раздел ``\textit{\@currentlabelname}''}
-}
-\makeatother
-
-\newcommand{\scnendsegmentcomment}[1]{
-	\scninlinesourcecommentpar{Завершили Сегмент ``\textit{#1}''}
-}
-
-\newcommand{\scnendfragmentcomment}{\\
-{\bfseries \normalsize /*\filldots/\hspace{0.5\textwidth}}
-}
-
-\newcommand{\scnauthorcomment}[1]{\begin{flushleft}
-/*/*#1*/*/\end{flushleft}}
-
-\newenvironment{FileFrame}{
-\begin{mdframed}[linewidth=0.5mm,roundcorner=0pt]
-}
-{
-\end{mdframed}
-}
-
-\newenvironment{ContourFrame}{
-\begin{mdframed}[linewidth=0.5mm,roundcorner=20pt]
-}
-{
-\end{mdframed}
-}
-
 %Subject domains
 \newcommand{\scnsdmainclass}[1]{
 \scnhaselementlist{максимальный класс объектов исследования}{#1}
@@ -994,26 +823,74 @@
 
 \newcommand{\scnbigspace}{~~}
 
+
+\newcommand{\scnsourcecomment}[1]{{\normalfont \normalsize \textbf{/*~}#1\textbf{{}~*/}}}
+
+\newcommand{\scnsourcecommentpar}[1]{
+\begin{adjustwidth}{\calctab+1em}{0em}
+\justify
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{0em}
+\hspace{-1em}\normalfont /*~#1{}~*/
+\end{adjustwidth}
+}
+
+\newcommand{\scninlinesourcecommentpar}[1]{
+\begin{adjustwidth}{\calctab+1em+\tabsize}{0em}
+\justify
+\setlength{\parindent}{0em}
+\setlength{\itemindent}{0em}
+\vspace{-0.9\baselineskip}
+\hspace{-1em}\normalfont /*~#1{}~*/
+\end{adjustwidth}
+}
+
+\makeatletter
+\newcommand{\scnendcurrentsectioncomment}{
+\scninlinesourcecommentpar{Завершили раздел ``\textit{\@currentlabelname}''}
+}
 \makeatother
 
-%SCN END
+\newcommand{\scnendsegmentcomment}[1]{
+	\scninlinesourcecommentpar{Завершили Сегмент ``\textit{#1}''}
+}
+
+\newcommand{\scnendfragmentcomment}{\\
+{\bfseries \normalsize /*\filldots/\hspace{0.5\textwidth}}
+}
+
+\newcommand{\scnauthorcomment}[1]{\begin{flushleft}
+/*/*#1*/*/\end{flushleft}}
+
+\RequirePackage{nameref}
+\RequirePackage{mdframed}
+\newenvironment{FileFrame}{
+\begin{mdframed}[linewidth=0.5mm,roundcorner=0pt]
+}
+{
+\end{mdframed}
+}
+
+\newenvironment{ContourFrame}{
+\begin{mdframed}[linewidth=0.5mm,roundcorner=20pt]
+}
+{
+\end{mdframed}
+}
 
 %Sections START
 
-\titleformat{\chapter}[display]
-{\normalfont\bfseries}{}{0pt}{\normalsize}
+\RequirePackage[pagestyles]{titlesec}
 
-\titleformat{\section}[display]
-{\normalfont\bfseries}{}{0pt}{\normalsize}
+\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
 
-\titleformat{\subsection}[display]
-{\normalfont\bfseries}{}{0pt}{\normalsize}
+\titleformat{\section}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
 
-\titleformat{\subsubsection}[display]
-{\normalfont\bfseries}{}{0pt}{\normalsize}
+\titleformat{\subsection}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
 
-\titleformat{\paragraph}[display]
-{\normalfont\bfseries}{}{0pt}{\normalsize}
+\titleformat{\subsubsection}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
+
+\titleformat{\paragraph}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
 
 \titlespacing*{\chapter}
 {0em}{0em}{0em}
@@ -1025,13 +902,6 @@
 {0em}{0em}{0em}
 \titlespacing*{\paragraph}
 {0em}{0em}{0em}
-
-\newcommand{\filldots}{\xleaders\hbox{*}\hfill}
-\newlength\afterparlength
-\setlength{\afterparlength}{-2em}
-
-\newlength\afterseglength
-\setlength{\afterseglength}{-1em}
 
 \newcommand{\scsuperchapter}{{\normalfont\bfseries\large/*\filldots/}\vspace{0.5\afterparlength}}
 
@@ -1065,7 +935,7 @@
 \fi}
 
 \newcommand\scsubsection[2][]{\clearpage
-\subsection[\textit{#2}]{/*~\textspaced{\large Раздел}~\filldots/\vspace{\afterparlength}}
+\subsection[\textit{#2}]{/*~\textspaced{\large Section}~\filldots/\vspace{\afterparlength}}
 \ifx&#1&
 \else
 \addtocontents{toc}{\vspace{\dimexpr -\toclineskip+0.1\baselineskip \relax}\parbox{\textwidth}{\begin{adjustwidth}{\tabsize+\tabsize}{0em}\begin{SCn}\protect#1\end{SCn}\end{adjustwidth}}
@@ -1098,6 +968,9 @@
 %Sections END
 
 % Itemize START
+
+\RequirePackage{enumitem}
+\RequirePackage{amssymb}
 
 \newenvironment{scnitemize}{
 \begin{itemize}[leftmargin=\leftmargin-1em+\bracketsize,itemsep=-0.25em,before=\vspace{-0.8em},after=\vspace{-0.5em}]
@@ -1135,7 +1008,6 @@
 
 % Itemize END
 
-
 % Background START
 
 \RequirePackage[pages=all]{background}
@@ -1157,7 +1029,6 @@
         ]current page.north west);
 
 \foreach \i in {1,2,...,18}{
-%RELEASE \draw[black!25] ($(NW)+(\i*\tabsize,0)$) -- ($(SW)+(\i*\tabsize,0)$);} 
 \draw[black!50] ($(NW)+(\i*\tabsize,0)$) -- ($(SW)+(\i*\tabsize,0)$);}
 
 \end{tikzpicture}
@@ -1183,60 +1054,15 @@ $\bm{\Leftarrow}$~{\itshape #1*}{\normalfont :}~{\itshape #2}}
 \newcommand{\scsabrreviation}[2]{\scnfileclass{#1}\scsrelto{является сокращением}{\scnfileclass{#2}}
 }
 
-
 % SCs END
 
-\usepackage{expl3}
-\usepackage{etoolbox}
-\usepackage[
-style=ieee,
-citestyle=authoryear,
-maxnames=3
-]{biblatex}
 
-
-\ExplSyntaxOn
-
-\clist_new:N \scncitenames
-\prop_new:N \scncitelist
-
-\NewDocumentCommand \addcite {m m} 
-{
-    \prop_if_in:NnTF \scncitelist {#1}{}{
-        \prop_gput:NnV \scncitelist {#1}{#2}
-        \clist_gput_right:Nn \scncitenames {#1}
-    }
-}
-\NewDocumentCommand \printscnbiblio {} 
-{
-    \clist_sort:Nn \scncitenames
-    {
-        \ifnumcomp{\pdfstrcmp{##1}{##2}}{>}{0}
-        { \sort_return_swapped: }
-        { \sort_return_same: }
-    }
-    \clist_map_inline:Nn \scncitenames {\prop_item:Nn \scncitelist {##1}}
-}
-\ExplSyntaxOff
-
-\newcommand{\scncite}[1]{
-\scncitecommon{#1}{\cite{#1}}
+\newcommand{\scnqq}[1]{
+    "#1"{}
 }
 
-\newcommand{\scncitecommon}[2]{
-\hspace{-0.6em}\textit{#2}\hspace{-0.8em}
-\addcite{#2}{\printscncite{#1}{#2}}
+\newcommand{\scnqqi}[1]{
+    ``#1''
 }
-
-\newcommand{\printscncite}[2]{
-\scnheader{#2}
-\scntext{библиографическая ссылка}{\fullcite{#1}}
-}
-
-\newcommand{\scnciteannotation}[1]{
-	\scntext{аннотация}{\citefield{#1}{annotation}}
-}
-
-
 
 \endinput
