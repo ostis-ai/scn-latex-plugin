@@ -7,7 +7,8 @@
 \RequirePackage[russian]{babel}
 %DEFINES START
 
-\newcommand\tabsize{3em}
+\newlength{\tabsize}
+\setlength{\tabsize}{3em}
 
 \newlength{\insize}
 \setlength{\insize}{0.6em}
@@ -48,6 +49,9 @@
 \newlength{\substructsize}
 \setlength{\substructsize}{1.7em}
 
+\newlength{\fileparskip}
+\setlength{\fileparskip}{0.5em}
+
 \newlength{\toclineskip}
 \setlength{\toclineskip}{\baselineskip}
 
@@ -70,8 +74,11 @@
     \textls[200]{#1}
 }
 
-
 \RequirePackage{amsmath,bm}
+
+\newcommand{\scnnonamednode}{%
+    $\pmb{\{}\pmb{\}}$\par
+}
 
 \newcommand{\scnstartstruct}{%
     \settab
@@ -110,56 +117,22 @@
 
 %DEFINES END
 
-\RequirePackage{tocloft}
-\makeatletter
-\renewcommand{\@cftmaketoctitle}{}
-\makeatother
-\renewcommand{\cftchapfont}{\bfseries}
-\renewcommand{\cftsecfont}{\bfseries}
-\renewcommand{\cftsubsecfont}{\bfseries}
-\renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
-
-\makeatletter
-\renewcommand{\cftchappresnum}{\begin{lrbox}{\@tempboxa}}
-\renewcommand{\cftchapaftersnum}{\end{lrbox}}
-\cftsetindents{chapter}{0pt}{0pt}
-\renewcommand{\cftsecpresnum}{\begin{lrbox}{\@tempboxa}}
-\renewcommand{\cftsecaftersnum}{\end{lrbox}}
-\cftsetindents{section}{\tabsize}{0pt}
-\renewcommand{\cftsubsecpresnum}{\begin{lrbox}{\@tempboxa}}
-\renewcommand{\cftsubsecaftersnum}{\end{lrbox}}
-\cftsetindents{subsection}{6em}{0pt}
-\renewcommand{\cftsubsubsecpresnum}{\begin{lrbox}{\@tempboxa}}
-\renewcommand{\cftsubsubsecaftersnum}{\end{lrbox}}
-\cftsetindents{subsubsection}{9em}{0pt}
-\renewcommand{\cftparapresnum}{\begin{lrbox}{\@tempboxa}}
-\renewcommand{\cftparaaftersnum}{\end{lrbox}}
-\cftsetindents{paragraph}{12em}{0pt}
-\renewcommand{\cftsubparapresnum}{\begin{lrbox}{\@tempboxa}}
-\renewcommand{\cftsubparaaftersnum}{\end{lrbox}}
-\cftsetindents{subparagraph}{15em}{0pt}
-\renewcommand\cftchapafterpnum{\vspace{\toclineskip}}
-\renewcommand\cftsecafterpnum{\vspace{\toclineskip}}
-\renewcommand\cftsubsecafterpnum{\vspace{\toclineskip}}
-\renewcommand\cftsubsubsecafterpnum{\vspace{\toclineskip}}
-\renewcommand\cftparaafterpnum{\vspace{\toclineskip}}
-\renewcommand\cftsubparaafterpnum{\vspace{\toclineskip}}
-\makeatother
-
 %SCN START
 
 \newcommand{\scnheader}[1]{%
     \setlength{\hangindent}{0em}
-    \par\textit{\textbf{#1}}\par
+    \setlength{\parskip}{\baselineskip}
+    \par\textit{\textbf{#1}}
+    \setlength{\parskip}{0em}
+    \par
 }
 
 \newcommand{\scnstructheader}[1]{%
     \setlength{\hangindent}{0em}
-    \par\textit{\textbf{\textspaced{#1}}}\par
+    \setlength{\parskip}{\baselineskip}
+    \par\textit{\textbf{\textspaced{#1}}}
+    \setlength{\parskip}{0em}
+    \par
 }
 
 \newcommand{\scnheaderlocal}[1]{%
@@ -216,12 +189,13 @@
 \RequirePackage{ragged2e}
 
 \newcommand{\scnfilelong}[1]{
-    \begin{adjustwidth}{\calctab}{0em}
+    \vspace{-\fileparskip}
+    \begin{adjustwidth}{\calctab+0.4em}{0em}
         \justify
         \setlength{\parindent}{0em}
         \setlength{\itemindent}{0em}
-        \setlength{\parskip}{0em}
-        \normalfont\textbf{[}#1\textbf{]}
+        \setlength{\parskip}{\fileparskip}
+        \hspace{-0.4em}\normalfont\textbf{[}#1\textbf{]}
     \end{adjustwidth}
 }
 
@@ -229,71 +203,69 @@
 \RequirePackage{graphicx}
 \RequirePackage{colortbl}
 
-\newcommand{\scnfileimage}[1]{
+\newcommand{\scnfileimage}[2][\textwidth-\calctab]{
     \begin{adjustwidth}{\calctab}{0em}
         \setlength{\parindent}{0em}
         \setlength{\itemindent}{0em}
         \setlength{\parskip}{0em}
-        \normalfont\textbf{[}
+        \normalfont\textbf{[}\hfill\\
         \cellcolor{white}
-        \begin{center}
-            \includegraphics[width=(\textwidth-\calctab)]{#1}
-        \end{center}
+        \includegraphics[width=#1]{#2}\\
         \textbf{]}
     \end{adjustwidth}
 }
 
 \newcommand{\scnrelfrom}[2]{%
     \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab\sethind%
         {\itshape #2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
 \newcommand{\scnrelsuperset}[2]{%
     \settab$\bm{\supset}$\makediff{\subsetsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \sethind\settab
         {\itshape #2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
 \newcommand{\scnvarrelfrom}[2]{%
     \settab\textunderscore$\bm{\Rightarrow}$\makediff{\arrowsizevar}\scnvarrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \sethind\settab
         {\itshape #2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
 \newcommand{\scnrelto}[2]{%
     \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \sethind\settab
         {\itshape #2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
 \newcommand{\scnvarrelto}[2]{%
     \settab\textunderscore$\bm{\Leftarrow}$\makediff{\arrowsizevar}\scnvarrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \sethind\settab
         {\itshape #2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
 \newcommand{\scnrelboth}[2]{%
     \settab$\bm{\Leftrightarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \sethind\settab
         {\itshape #2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
@@ -302,13 +274,13 @@
 }
 
 \newcommand{\scneqfile}[1]{%
-    \settab$\bm{=}$\\ 
+    \settab$\bm{=}$\\
     \scnfilelong{#1}\par
 }
 
-\newcommand{\scneqimage}[1]{%
-    \settab$\bm{=}$\\
-    \scnfileimage{#1}\par
+\newcommand{\scneqimage}[2][\textwidth-\calctab]{%
+    \settab$\bm{=}$
+    \scnfileimage[#1]{#2}\par
 }
 
 \RequirePackage[table]{xcolor}
@@ -368,42 +340,47 @@
 
 \newcommand{\scnhaselementrole}[2]{%
     \settab$\bm{\ni}$\makediff{\insize}\scnrolerel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab\sethind%
         \textit{#2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
 \newcommand{\scnhasvarelementrole}[2]{%
 	\settab\textunderscore$\bm{\ni}$\makediff{\insizevar}\scnvarrolerel{#1}
-	\begin{scnlevel}
+	\begin{scnindent}
 	    \settab\sethind%
 	    \textit{#2}
-	\end{scnlevel}
+	\end{scnindent}
 	\par
 }
 
 \newcommand{\scniselementrole}[2]{%
     \settab$\bm{\in}$\makediff{\insize}\scnrolerel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab\sethind%
         \textit{#2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
 \RequirePackage{mathtools}
 
 \newcommand{\scnidtf}[1]{%
-    \settab\sethind$\bm{\coloneqq}$\makediff{\coloneqsize}[#1]\par
+    \settab\sethind$\bm{\coloneqq}$\makediff{\coloneqsize}
+    \vspace{-\baselineskip}
+    \begin{scnindent}
+        \scnfilelong{#1}
+    \end{scnindent}
+    \par
 }
 
 \newcommand{\scnidtftext}[2]{%
     \settab$\bm{\coloneqq}$\makediff{\coloneqsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \scnfilelong{#2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
@@ -417,10 +394,10 @@
 
 \newcommand{\scntext}[2]{%
     \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
-        \sethind\settab
+    \begin{scnindent}
+        \sethind\settab%
         \scnfilelong{#2}
-    \end{scnlevel}
+    \end{scnindent}
     \par
 }
 
@@ -512,166 +489,21 @@
     \end{adjustwidth}
 }
 
+\newcommand{\scnendfragmentcomment}[1]{%
+    \vspace{-\baselineskip}\hspace{\tabsize}
+    \scnsourcecomment{Завершили ``\textit{#1}''}
+}
+
 \newcommand{\scnendcurrentsectioncomment}{%
+    \vspace{-\baselineskip}\hspace{\tabsize}
     \scnsourcecomment{Завершили раздел ``\textit{\currentname}''}
 }
 
 \newcommand{\scnendsegmentcomment}[1]{%
+    \vspace{-\baselineskip}\hspace{\tabsize}
 	\scnsourcecomment{Завершили Сегмент ``\textit{#1}''}
 }
 
-%Sections START
-
-\RequirePackage{nameref}
-
-\RequirePackage[pagestyles]{titlesec}
-
-\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
-
-\titleformat{\section}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
-
-\titleformat{\subsection}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
-
-\titleformat{\subsubsection}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
-
-\titleformat{\paragraph}[display]{\normalfont\bfseries}{}{0pt}{\normalsize}
-
-\titlespacing*{\chapter}
-{0em}{0em}{0em}
-\titlespacing*{\section}
-{0em}{0em}{0em}
-\titlespacing*{\subsection}
-{0em}{0em}{0em}
-\titlespacing*{\subsubsection}
-{0em}{0em}{0em}
-\titlespacing*{\paragraph}
-{0em}{0em}{0em}
-
-
-\newcommand{\scsectionfamily}[2][]{%
-    \clearpage\chapter{
-    /*~\textspaced{\large Семейство разделов}~\filldots/
-    }
-    \scnsectionheader{#1}
-    \ifx&#1&
-    \else
-	\addtocontents{toc}{
-	\vspace{\dimexpr -\toclineskip-0.4\baselineskip \relax}
-	\parbox{\textwidth}
-	{\protect#1}
-	\vspace{\toclineskip}
-	}
-	\fi
-}
-
-\newcommand{\scchapter}[2][]{
-    \clearpage\chapter[\textit{#2}]{
-    /*~\textspaced{\large Раздел}~
-    \filldots/
-    }
-    \ifx&#1&
-    \else
-    \addtocontents{toc}{
-    \vspace{\dimexpr -\toclineskip-0.4\baselineskip \relax}
-    \parbox{\textwidth}
-    {\protect#1}
-    \vspace{\toclineskip}
-    }
-    \fi
-}
-
-\newcommand{\scsection}[2][]{
-    \clearpage\section[\textit{#2}]{
-    /*~\textspaced{\large Раздел}~
-    \filldots/
-    }
-    \ifx&#1&
-    \else
-    \addtocontents{toc}{
-    \vspace{\dimexpr -\toclineskip+0.1\baselineskip \relax}
-    \parbox{\textwidth}
-    {\begin{adjustwidth}{\tabsize}{0em}
-        \protect#1
-    \end{adjustwidth}}
-    \vspace{\toclineskip}
-    }
-    \fi
-}
-
-\newcommand{\scseparatedfragment}[2][]{
-    \clearpage\chapter[\textit{#2}]{
-    /*\filldots/
-    }
-    \ifx&#1&
-    \else
-    \addtocontents{toc}{
-    \vspace{\dimexpr -\toclineskip-0.4\baselineskip \relax}
-    \parbox{\textwidth}
-    {\protect#1}
-    \vspace{\toclineskip}
-    }
-    \fi
-}
-
-\newcommand\scsubsection[2][]{
-    \clearpage\subsection[\textit{#2}]{
-    /*~\textspaced{\large Раздел}~
-    \filldots/
-    }
-    \ifx&#1&
-    \else
-    \addtocontents{toc}{
-    \vspace{\dimexpr -\toclineskip+0.1\baselineskip \relax}
-    \parbox{\textwidth}
-    {\begin{adjustwidth}{\tabsize+\tabsize}{0em}
-        \protect#1
-    \end{adjustwidth}}
-    \vspace{\toclineskip}
-    }
-    \fi
-}
-
-\newcommand{\scsubsubsection}[2][]{
-    \clearpage\subsubsection[\textit{#2}]{
-    /*~\textspaced{\large Раздел}~
-    \filldots/
-    }
-    \ifx&#1&
-    \else
-    \addtocontents{toc}{
-    \vspace{\dimexpr -\toclineskip+0.1\baselineskip \relax}
-    \parbox{\textwidth}
-    {\begin{adjustwidth}{\tabsize+\tabsize+\tabsize}{0em}
-        \protect#1
-    \end{adjustwidth}}
-    \vspace{\toclineskip}
-    }
-    \fi
-}
-
-\newcommand{\scparagraph}[2][]{
-    \clearpage\paragraph[\textit{#2}]{
-    /*~\textspaced{\large Раздел}~
-    \filldots/
-    }
-    \ifx&#1&
-    \else
-    \addtocontents{toc}{
-    \vspace{\dimexpr -\toclineskip+0.1\baselineskip \relax}
-    \parbox{\textwidth}
-    {\begin{adjustwidth}{\tabsize+\tabsize+\tabsize+\tabsize}{0em}
-        \protect#1
-    \end{adjustwidth}}
-    \vspace{\toclineskip}
-    }
-    \fi
-}
-
-\makeatletter
-\newcommand*{\currentname}{\@currentlabelname}
-\makeatother
-
-%Sections END
 
 % Itemize START
 
@@ -729,44 +561,6 @@
 
 % Itemize END
 
-% Background START
-
-\RequirePackage[pages=all]{background}
-\RequirePackage{tikz}
-\usetikzlibrary{calc} 
-\RequirePackage{layout}
-
-\newcommand{\drawvlines}{
-\begin{tikzpicture}[remember picture,overlay]
-
-\coordinate (NW) at ([
-            xshift=0.36in,
-            yshift=-1.1in-2\voffset-\topmargin-\headheight-\headsep,
-        ]current page.north west);
-        
-\coordinate (SW) at ([
-            xshift=0.36in,
-            yshift=-1.1in-2\voffset-\topmargin-\headheight-\headsep-\textheight,
-        ]current page.north west);
-
-\foreach \i in {1,2,...,18}{
-\draw[black!50] ($(NW)+(\i*\tabsize,0)$) -- ($(SW)+(\i*\tabsize,0)$);}
-
-\end{tikzpicture}
-}
-
-\newcommand\DeactivateBG{\backgroundsetup{contents={}}}
-\newcommand\ActivateBG{\backgroundsetup{contents={\drawvlines}}}
-
-\backgroundsetup{
-scale=1,
-color=black,
-opacity=1.0,
-angle=0
-}
-
-% Background END
-
 \newcommand{\scnqq}[1]{"#1"{}}
 
 \newcommand{\scnqqi}[1]{``#1''}
@@ -781,62 +575,88 @@ angle=0
     \end{flushleft}
 }
 
-\newenvironment{scnlevel}
+\newenvironment{scnindent}
 {\addtocounter{hind}{1}}
 {\addtocounter{hind}{-1}}
 
+\providecommand{\scnfileitem}[1]{
+    \vspace{-\baselineskip}
+    \begin{adjustwidth}{\calctab+\tabsize+0.2em}{0em}
+        \justify
+        \setlength{\parindent}{0em}
+        \setlength{\itemindent}{0em}
+        \setlength{\parskip}{0em}
+        \hspace{-0.2em}\normalfont\textbf{[}#1\textbf{]}
+    \end{adjustwidth}
+}
+    
 \newenvironment{scnlist}{%
     \providecommand{\scnitem}[1]{%
+        \let\oldlongfile\scnfilelong
+        \let\scnfilelong\scnfileitem
         \settab
         \sethind
         \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
+        \let\scnfilelong\oldlongfile
     }
     \renewcommand{\scnitem}[1]{%
+        \let\oldlongfile\scnfilelong
+        \let\scnfilelong\scnfileitem
         \settab
         \sethind
         \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
+        \let\scnfilelong\oldlongfile
     }
 }{}
 
 \newenvironment{scnlistset}{%
     \providecommand{\scnitem}[1]{%
+        \let\oldlongfile\scnfilelong
+        \let\scnfilelong\scnfileitem
         \settab
         \sethind
         \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
+        \let\scnfilelong\oldlongfile
     }
     \renewcommand{\scnitem}[1]{%
+        \let\oldlongfile\scnfilelong
+        \let\scnfilelong\scnfileitem
         \setlength{\parindent}{\calctab+\bulletsize}
         \sethind
         \par$\bullet$\makediff{\bulletbracketsize}\textit{##1}\par
+        \let\scnfilelong\oldlongfile
     }
 }{}
 
 \newenvironment{scnrelfromlist}[1]{%
+    \par
     \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}%
+    \begin{scnindent}%
         \begin{scnlist}%
 }{
         \end{scnlist}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 
 \newenvironment{scnreltolist}[1]{%
+    \par
     \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \begin{scnlist}
 }{
         \end{scnlist} 
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnrelbothlist}[1]{%
+    \par
     \settab$\bm{\Leftrightarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \begin{scnlist}
 }{
         \end{scnlist} 
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \RequirePackage{xparse}
@@ -865,8 +685,9 @@ angle=0
 {\end{set}}
 
 \newenvironment{scnrelfromset}[1]{%
+    \par
     \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab
         \begin{scnset}
             \vspace{-\baselineskip}
@@ -875,12 +696,13 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnset}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnrelfromvector}[1]{%
+    \par
     \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab
         \begin{scnvector}
             \vspace{-\baselineskip}
@@ -889,12 +711,12 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnvector}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnreltoset}[1]{%
     \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab
         \begin{scnset}
             \vspace{-\baselineskip}
@@ -903,12 +725,13 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnset}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnreltovector}[1]{%
+    \par
     \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab
         \begin{scnvector}
             \vspace{-\baselineskip}
@@ -917,12 +740,13 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnvector}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnhaselementset}{%
+    \par
     \settab$\bm{\ni}$
-    \begin{scnlevel}
+    \begin{scnindent}
         \settab
         \vspace{-\baselineskip}
         \begin{scnset}
@@ -932,12 +756,13 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnset}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnhaselementvector}{%
+    \par
     \settab$\bm{\ni}$%
-    \begin{scnlevel}%
+    \begin{scnindent}%
         \settab
         \vspace{-\baselineskip}
         \begin{scnvector}
@@ -947,12 +772,13 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnvector}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scneqtoset}{%
+    \par
     \settab$\bm{=}$%
-    \begin{scnlevel}%
+    \begin{scnindent}%
         \settab
         \vspace{-\baselineskip}
         \begin{scnset}
@@ -962,12 +788,13 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnset}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scneqtovector}{%
+    \par
     \settab$\bm{=}$%
-    \begin{scnlevel}%
+    \begin{scnindent}%
         \settab
         \vspace{-\baselineskip}
         \begin{scnvector}
@@ -977,12 +804,13 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnvector}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnhassubstruct}{%
+    \par
     \settab$\bm{\supset=}$%
-    \begin{scnlevel}%
+    \begin{scnindent}%
         \settab
         \vspace{-\baselineskip}
         \begin{scnset}
@@ -992,7 +820,7 @@ angle=0
             \end{scnlistset}
             \settab
         \end{scnset}
-    \end{scnlevel}
+    \end{scnindent}
 }
 
 \newenvironment{scnsubdividing}{%
@@ -1002,57 +830,5 @@ angle=0
 }
 
 % ENVIRONMENTS End
-
-\RequirePackage{expl3}
-\RequirePackage{etoolbox}
-\RequirePackage[
-style=ieee,
-citestyle=authoryear,
-maxnames=3
-]{biblatex}
-
-
-\ExplSyntaxOn
-
-\clist_new:N \scncitenames
-\prop_new:N \scncitelist
-
-\NewDocumentCommand \addcite {m m} 
-{
-    \prop_if_in:NnTF \scncitelist {#1}{}{
-        \prop_gput:NnV \scncitelist {#1}{#2}
-        \clist_gput_right:Nn \scncitenames {#1}
-    }
-}
-\NewDocumentCommand \printscnbiblio {} 
-{
-    \clist_sort:Nn \scncitenames
-    {
-        \ifnumcomp{\pdfstrcmp{##1}{##2}}{>}{0}
-        { \sort_return_swapped: }
-        { \sort_return_same: }
-    }
-    \clist_map_inline:Nn \scncitenames {\prop_item:Nn \scncitelist {##1}}
-}
-\ExplSyntaxOff
-
-\newcommand{\scncite}[1]{
-\scncitecommon{#1}{\cite{#1}}
-}
-
-\newcommand{\scncitecommon}[2]{
-\hspace{-0.6em}\textit{#2}\hspace{-0.8em}
-\addcite{#2}{\printscncite{#1}{#2}}
-}
-
-\newcommand{\printscncite}[2]{
-\scnheader{#2}
-\scntext{библиографическая ссылка}{\fullcite{#1}}
-}
-
-\newcommand{\scnciteannotation}[1]{
-	\scntext{аннотация}{\citefield{#1}{annotation}}
-}
-
 \endinput
 
