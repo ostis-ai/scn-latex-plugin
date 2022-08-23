@@ -9,9 +9,7 @@ RUN apt-get install -y \
   fontconfig
 
 
-RUN echo "selected_scheme scheme-basic \
-tlpdbopt_install_docfiles 0 \
-tlpdbopt_install_srcfiles 0" > ./texlive.profile
+RUN echo "selected_scheme scheme-basic\ntlpdbopt_install_docfiles 0\ntlpdbopt_install_srcfiles 0" > ./texlive.profile
 
 
 RUN wget -nv https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
@@ -34,41 +32,28 @@ RUN apt-get update \
     python2 python-is-python2 \
     && rm -rf /var/lib/apt/lists/*
 RUN ln -sf /usr/local/texlive/*/bin/* /usr/local/bin/texlive
+
 RUN tlmgr install texliveonfly \
-import \
-framed \
-type1cm \
-setspace \
-xcolor \
-enumitem \
-mathtools \
-ragged2e \
-float \
-algorithm2e \
-ifoddpage \
-relsize \
-algorithms \
-titlesec \
 microtype \
 etoolbox \
 changepage \
-trimspaces \
-datetime \
-fmtcount \
-xkeyval \
-bigfoot \
-mdframed \
-zref \
-needspace \
-ulem \
-footmisc \
-substitutefont \
-tempora \
+ragged2e \
+xcolor \
+mathtools \
+enumitem \
 tocloft \
+silence \
 background \
-everypage \
+xkeyval \
 pgf \
-babel-russian \
+everypage \
+csquotes \
+biblatex \
 cyrillic \
-biblatex
+babel-russian \
+lh
+
+COPY . /root/texmf/tex/latex/scn-latex-plugin
+RUN texhash
+
 ENTRYPOINT ["/bin/bash", "-c"]
