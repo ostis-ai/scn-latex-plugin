@@ -49,6 +49,7 @@ pgf \
 everypage \
 csquotes \
 biblatex \
+biber \
 cyrillic \
 babel-russian \
 lh
