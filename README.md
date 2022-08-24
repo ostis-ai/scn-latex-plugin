@@ -16,7 +16,7 @@ You can also use it with Docker.
 
 ```sh
 docker build . -t scn-latex-plugin
-docker run -v </abspath/to/project/folder>:/workdir -it --rm scn-latex-plugin <main .tex-file name>
+docker run -v </abspath/to/project/folder>:/workdir -it --rm scn-latex-plugin
 ```
 
 ### Example
