@@ -343,6 +343,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{csquotes}
 \RequirePackage[
+  citestyle=authoryear,
   maxnames=3
 ]{biblatex}
 
@@ -373,7 +374,7 @@
 }
 
 \newcommand{\scncitecommon}[2]{%
-  \hspace{-0.6em}\textit{#2}\hspace{-0.8em}
+  \textit{#2}
   \addcite{#2}{\printscncite{#1}{#2}}
 }
 
@@ -383,7 +384,7 @@
 }
 
 \newcommand{\scnciteannotation}[1]{
-  \scnaddlevel{1}}\scntext{аннотация}{\citefield{#1}{annotation}}
+  \scntext{аннотация}{\citefield{#1}{annotation}}
 }
 
 % BIBLIOGRAPHY END

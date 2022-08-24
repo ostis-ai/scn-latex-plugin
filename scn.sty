@@ -740,6 +740,22 @@
   \end{scnindent}
 }
 
+\newenvironment{scnhassubset}{%
+  \par
+  \settab$\bm{\supset}$
+  \begin{scnindent}
+    \settab
+    \vspace{-\baselineskip}
+    \begin{scnset}
+      \vspace{-\baselineskip}
+      \begin{scnlistset}
+}{
+      \end{scnlistset}
+      \settab
+    \end{scnset}
+  \end{scnindent}
+}
+
 % ENVIRONMENTS End
 \endinput
 
