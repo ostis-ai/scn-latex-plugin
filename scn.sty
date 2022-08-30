@@ -297,11 +297,22 @@
 }
 
 \newcommand{\scnfileclass}[1]{%
-  \normalfont![~#1~]!
+  \vspace{-\fileparskip}
+  \begin{adjustwidth}{\calctab+0.7em}{0em}
+    \justify
+    \setlength{\parindent}{0em}
+    \setlength{\itemindent}{0em}
+    \setlength{\parskip}{\fileparskip}
+    \hspace{-0.7em}\normalfont\textbf{![}#1\textbf{]!}
+  \end{adjustwidth}
 }
 
 \newcommand{\scneqfileclass}[1]{%
-  \settab\sethind$\bm{=}$\makediff{\eqsize}\scnfileclass{#1}\par
+  \settab\sethind$\bm{=}$\makediff{\eqsize}%
+  \vspace{-\baselineskip}
+  \begin{scnindent}
+    \scnfileclass{#1}\par
+  \end{scnindent}
 }
 
 \newcommand{\scnsubset}[1]{%
@@ -498,12 +509,12 @@
 
 \providecommand{\scnfileitem}[1]{
   \vspace{-\baselineskip}
-  \begin{adjustwidth}{\calctab+\tabsize+0.2em}{0em}
+  \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
     \justify
     \setlength{\parindent}{0em}
     \setlength{\itemindent}{0em}
     \setlength{\parskip}{0em}
-    \hspace{-0.2em}\normalfont\textbf{[}#1\textbf{]}
+    \hspace{-0.4em}\normalfont\textbf{[}#1\textbf{]}
   \end{adjustwidth}
 }
     
