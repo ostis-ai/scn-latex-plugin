@@ -29,12 +29,10 @@ RUN apt-get update \
     perl \
     wget \
     git \
-    python2 python-is-python2 \
     && rm -rf /var/lib/apt/lists/*
 RUN ln -sf /usr/local/texlive/*/bin/* /usr/local/bin/texlive
 
-RUN tlmgr install texliveonfly \
-microtype \
+RUN tlmgr install microtype \
 etoolbox \
 changepage \
 ragged2e \
