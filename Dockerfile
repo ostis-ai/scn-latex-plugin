@@ -57,4 +57,5 @@ lh
 COPY . /root/texmf/tex/latex/scn-latex-plugin
 RUN texhash
 
-ENTRYPOINT ["/bin/bash", "-c", "latexmk -pdf -bibtex tests.tex"]
+ENTRYPOINT ["/bin/bash", "-c", "latexmk -pdf -bibtex"]
+CMD ["tests.tex"]
