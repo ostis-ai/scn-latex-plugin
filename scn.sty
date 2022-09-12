@@ -509,53 +509,52 @@
 \newenvironment{scnindent}
 {\addtocounter{hind}{1}}
 {\addtocounter{hind}{-1}}
-
-\providecommand{\scnfileitem}[1]{
-  \vspace{-\baselineskip}
-  \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
-    \justify
-    \setlength{\parindent}{0em}
-    \setlength{\itemindent}{0em}
-    \setlength{\parskip}{0em}
-    \hspace{-0.4em}\normalfont\textbf{[}#1\textbf{]}
-  \end{adjustwidth}
-}
     
 \newenvironment{scnlist}{%
   \providecommand{\scnitem}[1]{%
-    \let\oldlongfile\scnfilelong
-    \let\scnfilelong\scnfileitem
     \settab
     \sethind
     \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
-    \let\scnfilelong\oldlongfile
+  }
+  \providecommand{\scnfileitem}[1]{
+    \hspace{0.5em}$\bullet$
+    \vspace{-\baselineskip}
+    \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
+      \justify
+      \setlength{\parindent}{0em}
+      \setlength{\itemindent}{0em}
+      \setlength{\parskip}{0em}
+      \hspace{-0.4em}\normalfont\textbf{[}##1\textbf{]}
+    \end{adjustwidth}
   }
   \renewcommand{\scnitem}[1]{%
-    \let\oldlongfile\scnfilelong
-    \let\scnfilelong\scnfileitem
     \settab
     \sethind
     \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
-    \let\scnfilelong\oldlongfile
   }
 }{}
 
 \newenvironment{scnlistset}{%
   \providecommand{\scnitem}[1]{%
-    \let\oldlongfile\scnfilelong
-    \let\scnfilelong\scnfileitem
     \settab
     \sethind
     \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
-    \let\scnfilelong\oldlongfile
+  }
+  \providecommand{\scnfileitem}[1]{%
+    \hspace{0.5em}$\bullet$
+    \vspace{-\baselineskip}
+    \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
+      \justify
+      \setlength{\parindent}{0em}
+      \setlength{\itemindent}{0em}
+      \setlength{\parskip}{0em}
+      \hspace{-0.4em}\normalfont\textbf{[}##1\textbf{]}
+    \end{adjustwidth}
   }
   \renewcommand{\scnitem}[1]{%
-    \let\oldlongfile\scnfilelong
-    \let\scnfilelong\scnfileitem
     \setlength{\parindent}{\calctab+\bulletsize}
     \sethind
     \par$\bullet$\makediff{\bulletbracketsize}\textit{##1}\par
-    \let\scnfilelong\oldlongfile
   }
 }{}
 
