@@ -50,10 +50,17 @@ biblatex \
 biber \
 cyrillic \
 babel-russian \
-lh
+lh \
+import \
+ulem
 
 COPY . /root/texmf/tex/latex/scn-latex-plugin
 RUN texhash
 
-ENTRYPOINT ["/bin/bash", "-c", "latexmk -pdf -bibtex"]
-CMD ["tests.tex"]
+RUN echo "#!/bin/bash" > /entrypoint.sh
+RUN echo "cd \$(dirname \$1) && latexmk -pdf -bibtex \$(basename \$1)" >> /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+WORKDIR /workdir
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "tests.tex" ]
