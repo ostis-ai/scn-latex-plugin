@@ -9,9 +9,7 @@ RUN apt-get install -y \
   fontconfig
 
 
-RUN echo "selected_scheme scheme-basic \
-tlpdbopt_install_docfiles 0 \
-tlpdbopt_install_srcfiles 0" > ./texlive.profile
+RUN echo "selected_scheme scheme-basic\ntlpdbopt_install_docfiles 0\ntlpdbopt_install_srcfiles 0" > ./texlive.profile
 
 
 RUN wget -nv https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
@@ -31,44 +29,38 @@ RUN apt-get update \
     perl \
     wget \
     git \
-    python2 python-is-python2 \
     && rm -rf /var/lib/apt/lists/*
 RUN ln -sf /usr/local/texlive/*/bin/* /usr/local/bin/texlive
-RUN tlmgr install texliveonfly \
-import \
-framed \
-type1cm \
-setspace \
-xcolor \
-enumitem \
-mathtools \
-ragged2e \
-float \
-algorithm2e \
-ifoddpage \
-relsize \
-algorithms \
-titlesec \
-microtype \
+
+RUN tlmgr install microtype \
 etoolbox \
 changepage \
-trimspaces \
-datetime \
-fmtcount \
-xkeyval \
-bigfoot \
-mdframed \
-zref \
-needspace \
-ulem \
-footmisc \
-substitutefont \
-tempora \
+ragged2e \
+xcolor \
+mathtools \
+enumitem \
 tocloft \
+silence \
 background \
-everypage \
+xkeyval \
 pgf \
-babel-russian \
+everypage \
+csquotes \
+biblatex \
+biber \
 cyrillic \
-biblatex
-ENTRYPOINT ["/bin/bash", "-c"]
+babel-russian \
+lh \
+import \
+ulem
+
+COPY . /root/texmf/tex/latex/scn-latex-plugin
+RUN texhash
+
+RUN echo "#!/bin/bash" > /entrypoint.sh
+RUN echo "cd \$(dirname \$1) && latexmk -pdf -bibtex \$(basename \$1)" >> /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+WORKDIR /workdir
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "tests.tex" ]

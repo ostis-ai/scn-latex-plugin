@@ -7,22 +7,26 @@ This repository contains LaTeX plugin to write SCn code.
 To start using this plugin clone current repo in the directory with your project
 
 ```sh
-git clone https://github.com/ostis-ai/scn-latex-plugin
+mkdir -p ~/texmf/tex/latex
+git clone https://github.com/ostis-ai/scn-latex-plugin ~/texmf/tex/latex
+texhash
 ```
 
 You can also use it with Docker.
 
 ```sh
-docker run -v </abspath/to/project/folder>:/workdir -it --rm ostis/ostis-standard <main .tex-file name>
+docker run -v </abspath/to/project/folder>:/workdir -it --rm scn-latex-plugin <main *.tex file>
 ```
 
 ### Example
 
 ```tex
-\documentclass[graybox,envcountchap,sectrefs]{scn-latex-plugin/svmono}
+\documentclass{scndocument}
 
-\usepackage{scn-latex-plugin/scn}
+\usepackage{scn}
 
 \begin{document}
+\begin{SCn}
+\end{SCn}	
 \end{document}
 ```
