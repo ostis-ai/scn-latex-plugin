@@ -261,7 +261,7 @@
     \end{scnindent}
     \scnitem{scnsubstruct}
     \begin{scnindent}
-      \scntext{purpose}{this macros creates construction equivalent to immersion operation}
+      \scntext{purpose}{this macros is similar to \scnkeyword{scnstruct} but represents immersion operation semantics}
     \end{scnindent}
     \scnitem{scnset}
     \begin{scnindent}
@@ -277,20 +277,65 @@
   \scnheader{advanced relation}
   \begin{scnhaselementset}
     \scnitem{scnitem}
+    \begin{scnindent}
+      \scntext{purpose}{create item in \scnkeyword{advanced relation} environments}
+    \end{scnindent}
     \scnitem{scnfileitem}
+    \begin{scnindent}
+      \scntext{purpose}{create item in \scnkeyword{advanced relation} environments represented with \scnkeyword{file of the ostis-system}}
+    \end{scnindent}
     \scnitem{scnrelfromlist}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scnreltolist}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation to previous header from list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scnrelbothlist}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to list of \scnkeyword{sc-elements} and vice versa}
+    \end{scnindent}
     \scnitem{scnrelfromset}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scnrelfromvector}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scnreltoset}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation to previous header from unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scnreltovector}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation to previous header from oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scnhaselementset}
+    \begin{scnindent}
+      \scntext{puprose}{mark that previous header has unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements} as constant element}
+    \end{scnindent}
     \scnitem{scnhaselementvector}
+    \begin{scnindent}
+      \scntext{puprose}{mark that previous header has oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements} as constant element}
+    \end{scnindent}
     \scnitem{scneqtoset}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header is semantically equivalent to unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scneqtovector}
-    \scnitem{scnhassubstruct}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header is semantically equivalent to oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
     \scnitem{scnhassubset}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header includes unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnhassubstruct}
+    \begin{scnindent}
+      \scntext{purpose}{this macros is similar to \scnkeyword{scnhassubset} but represents immersion operation semantics}
+    \end{scnindent}
   \end{scnhaselementset}
 
   \scnheader{SCn variable}
