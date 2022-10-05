@@ -1,6 +1,6 @@
 ## SCn-LaTeX plugin
 
-This repository contains LaTeX plugin to write SCn code.
+This repository contains LaTeX plugin to represent knowledge in [SCn code](https://github.com/ostis-ai/ostis-project).
 
 ### Installation
 
@@ -28,6 +28,7 @@ TEXINPUTS=./scn: latexmk -pdf -bibtex ./main.tex
 ```sh
 docker run -v </abspath/to/project/folder>:/workdir ostis/scn-latex-plugin:latest </path/to/main/tex/file>
 ```
+**Note:** the last argument in command is path in docker container (relative to /workdir)
 
 ### Example
 
@@ -38,6 +39,14 @@ docker run -v </abspath/to/project/folder>:/workdir ostis/scn-latex-plugin:lates
 
 \begin{document}
 \begin{SCn}
+\ActivateBG
+  \scnheader{\LaTeX plugin for SCn-code representation}
+  \scnidtf{scn-latex-plugin}
+  \scnsuperset{\scnkeyword{SCn macro}}
 \end{SCn}
 \end{document}
 ```
+
+After compile this piece of code should look like this
+
+![](./docs/img/example.png)
