@@ -34,7 +34,7 @@
   \end{scnrelfromset}
 
   \scnheader{structure and table of contents}
-  \scntext{note}{names of sections differ in table of contents depth, but in the text of \textit{PDF} called "Section"}
+  \scntext{note}{names of sections differ in table of contents depth, but in the text of \textit{PDF} they all are called "Section"}
   \begin{scnhaselementset}
     \scnitem{scseparatedfragment}
     \scnitem{scsectionfamily}
@@ -44,6 +44,9 @@
     \scnitem{scsubsubsection}
     \scnitem{scparagraph}
     \scnitem{currentname}
+    \begin{scnindent}
+      \scntext{puprose}{print name of the current section}
+    \end{scnindent}
   \end{scnhaselementset}
 
   \scnheader{headers and style}
@@ -82,15 +85,15 @@
     \end{scnindent}
     \scnitem{scnfilelong}
     \begin{scnindent}
-      \scntext{purpose}{create sc-element that represents file of the ostis-system}
+      \scntext{purpose}{create sc-element that represents \scnkeyword{file of the ostis-system}}
     \end{scnindent}
     \scnitem{scnfileimage}
     \begin{scnindent}
-      \scntext{purpose}{create sc-element that represents file of the ostis-system as image}
+      \scntext{purpose}{create sc-element that represents \scnkeyword{file of the ostis-system} as image}
     \end{scnindent}
     \scnitem{scnfiletable}
     \begin{scnindent}
-      \scntext{purpose}{create sc-element that represents file of the ostis-system as table}
+      \scntext{purpose}{create sc-element that represents \scnkeyword{file of the ostis-system} as table}
     \end{scnindent}
     \scnitem{scnfileclass}
     \scnitem{scnnonamednode}
@@ -130,114 +133,144 @@
   \begin{scnhaselementset}
     \scnitem{scnrelfrom}
     \begin{scnindent}
-      \scntext{purpose}{create constant positive relation from last header}
+      \scntext{purpose}{create constant positive relation from previous header}
     \end{scnindent}
     \scnitem{scnrelsuperset}
     \begin{scnindent}
-      \scntext{purpose}{create subset of last header with some relation}
+      \scntext{purpose}{create subset of previous header with some relation}
     \end{scnindent}
     \scnitem{scnvarrelfrom}
     \begin{scnindent}
-      \scntext{purpose}{create variable positive relation from last header}
+      \scntext{purpose}{create variable positive relation from previous header}
     \end{scnindent}
     \scnitem{scnrelto}
     \begin{scnindent}
-      \scntext{purpose}{create constant positive relation to last header}
+      \scntext{purpose}{create constant positive relation to previous header}
     \end{scnindent}
     \scnitem{scnvarrelto}
     \begin{scnindent}
-      \scntext{purpose}{create variable positive relation to last header}
+      \scntext{purpose}{create variable positive relation to previous header}
     \end{scnindent}
     \scnitem{scnrelboth}
     \begin{scnindent}
-      \scntext{purpose}{create constant positive relation from and to last header}
+      \scntext{purpose}{create constant positive relation from and to previous header}
     \end{scnindent}
     \scnitem{scneq}
     \begin{scnindent}
-      \scntext{purpose}{used for semantic equivalence relation for last header}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
     \end{scnindent}
     \scnitem{scneqfile}
     \begin{scnindent}
-      \scntext{purpose}{used for semantic equivalence relation for last header}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
       \scntext{note}{for use with files as second domain}
     \end{scnindent}
     \scnitem{scneqimage}
     \begin{scnindent}
-      \scntext{purpose}{used for semantic equivalence relation for last header}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
       \scntext{note}{for use with images as second domain}
     \end{scnindent}
     \scnitem{scneqtable}
     \begin{scnindent}
-      \scntext{purpose}{used for semantic equivalence relation for last header}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
       \scntext{note}{for use with tables as second domain}
     \end{scnindent}
     \scnitem{scneqfileclass}
     \scnitem{scnsubset}
     \begin{scnindent}
-      \scntext{purpose}{create superset for last header}
+      \scntext{purpose}{create superset for previous header}
     \end{scnindent}
     \scnitem{scnnotsubset}
     \begin{scnindent}
-      \scntext{purpose}{mark that last header is not a subset of some set}
+      \scntext{purpose}{mark that previous header is not a subset of some set}
     \end{scnindent}
     \scnitem{scnsuperset}
     \begin{scnindent}
-      \scntext{purpose}{create a subset for last header}
+      \scntext{purpose}{create a subset for previous header}
     \end{scnindent}
     \scnitem{scniselement}
     \begin{scnindent}
-      \scntext{purpose}{mark last header as a constant element of some set}
+      \scntext{purpose}{mark previous header as a constant element of some set}
     \end{scnindent}
     \scnitem{scnisvarelement}
     \begin{scnindent}
-      \scntext{purpose}{mark last header as a variable element of some set}
+      \scntext{purpose}{mark previous header as a variable element of some set}
     \end{scnindent}
     \scnitem{scnhaselement}
     \begin{scnindent}
-      \scntext{purpose}{mark that last header has some constant element}
+      \scntext{purpose}{mark that previous header has some constant element}
     \end{scnindent}
     \scnitem{scnhasvarelement}
     \begin{scnindent}
-      \scntext{purpose}{mark that last header has some variable element}
+      \scntext{purpose}{mark that previous header has some variable element}
     \end{scnindent}
     \scnitem{scnhaselementrole}
     \begin{scnindent}
-      \scntext{purpose}{mark that last header has some constant element with role in it}
+      \scntext{purpose}{mark that previous header has some constant element with role in it}
     \end{scnindent}
     \scnitem{scnhasvarelementrole}
     \begin{scnindent}
-      \scntext{purpose}{mark that last header has some variable element with role in it}
+      \scntext{purpose}{mark that previous header has some variable element with role in it}
     \end{scnindent}
     \scnitem{scniselementrole}
     \begin{scnindent}
-      \scntext{purpose}{mark last header as a constant element of some set with role in it}
+      \scntext{purpose}{mark previous header as a constant element of some set with role in it}
     \end{scnindent}
     \scnitem{scnidtf}
     \begin{scnindent}
-      \scntext{purpose}{create identifier of last header}
+      \scntext{purpose}{create identifier of previous header}
     \end{scnindent}
     \scnitem{scnidtftext}
     \begin{scnindent}
-      \scntext{purpose}{create identifier of last header with dome relation}
+      \scntext{purpose}{create identifier of previous header with dome relation}
     \end{scnindent}
     \scnitem{scntext}
     \begin{scnindent}
-      \scntext{purpose}{create relation from last header to some file of the ostis-system}
+      \scntext{purpose}{create relation from previous header to some \scnkeyword{file of the ostis-system}}
     \end{scnindent}
   \end{scnhaselementset}
 
   \scnheader{advanced structure}
   \begin{scnhaselementset}
     \scnitem{SCn}
+    \begin{scnindent}
+      \scntext{purpose}{wraps all \scnkeyword{sc.n-text}}
+    \end{scnindent}
     \scnitem{scnindent}
+    \begin{scnindent}
+      \scntext{purpose}{create new indent to make all following connectors until the end of environment incident with the previous header}
+    \end{scnindent}
     \scnitem{scnitemize}
+    \begin{scnindent}
+      \scntext{purpose}{create itemized list inside \scnkeyword{file of the ostis-system} of level 1}
+    \end{scnindent}
     \scnitem{scnitemizeii}
+    \begin{scnindent}
+      \scntext{purpose}{create itemized list inside \scnkeyword{file of the ostis-system} of level 2}
+    \end{scnindent}
     \scnitem{scnitemizeiii}
+    \begin{scnindent}
+      \scntext{purpose}{create itemized list inside \scnkeyword{file of the ostis-system} of level 3}
+    \end{scnindent}
     \scnitem{scnenumerate}
+    \begin{scnindent}
+      \scntext{purpose}{create enumerated list inside \scnkeyword{file of the ostis-system}}
+    \end{scnindent}
     \scnitem{scnstruct}
+    \begin{scnindent}
+      \scntext{purpose}{create \scnkeyword{sctructure} to specify its content inside environment}
+    \end{scnindent}
     \scnitem{scnsubstruct}
+    \begin{scnindent}
+      \scntext{purpose}{this macros creates construction equivalent to immersion operation}
+    \end{scnindent}
     \scnitem{scnset}
+    \begin{scnindent}
+      \scntext{purpose}{create \scnkeyword{sc-set} to specify its content inside environment}
+    \end{scnindent}
     \scnitem{scnvector}
+    \begin{scnindent}
+      \scntext{purpose}{create oriented \scnkeyword{sc-set} to specify its content inside environment}
+    \end{scnindent}
     \scnitem{scnhierstruct}
   \end{scnhaselementset}
   
