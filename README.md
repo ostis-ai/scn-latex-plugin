@@ -47,6 +47,6 @@ docker run -v </abspath/to/project/folder>:/workdir ostis/scn-latex-plugin:lates
 \end{document}
 ```
 
-After compile this piece of code should look like this
+The code above will result in a following .pdf:
 
 ![](./docs/img/example.png)
