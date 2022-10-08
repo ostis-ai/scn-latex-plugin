@@ -1,0 +1,358 @@
+\documentclass{scndocument}
+
+\usepackage{scn}
+
+\begin{document}
+\begin{SCn}
+  \ActivateBG
+
+  \scnheader{\LaTeX plugin for SCn-code representation}
+  \scnidtf{scn-latex-plugin}
+
+  \scntext{note}{Current documentation is an example of use of described macros}
+
+  \scnsuperset{SCn macro}
+
+  \scnheader{SCn macro}
+  \begin{scnrelfromset}{subdividing}
+    \scnitem{SCn function}
+    \begin{scnindent}
+      \begin{scnrelfromset}{subdividing by puprose}
+        \scnitem{structure and table of contents}
+        \scnitem{headers and style}
+        \scnitem{basic relation}
+      \end{scnrelfromset}
+    \end{scnindent}
+    \scnitem{SCn environment}
+    \begin{scnindent}
+      \begin{scnrelfromset}{subdividing by puprose}
+        \scnitem{advanced structure}
+        \scnitem{advanced relation}
+      \end{scnrelfromset}
+    \end{scnindent}
+    \scnitem{SCn variable}
+  \end{scnrelfromset}
+
+  \scnheader{structure and table of contents}
+  \scntext{note}{names of sections differ in table of contents depth, but in the text of \textit{PDF} they all are called \scnqq{Section}}
+  \begin{scnhaselementset}
+    \scnitem{scseparatedfragment}
+    \scnitem{scsectionfamily}
+    \scnitem{scchapter}
+    \scnitem{scsection}
+    \scnitem{scsubsection}
+    \scnitem{scsubsubsection}
+    \scnitem{scparagraph}
+    \scnitem{currentname}
+    \begin{scnindent}
+      \scntext{puprose}{print name of the current section}
+    \end{scnindent}
+  \end{scnhaselementset}
+
+  \scnheader{headers and style}
+  \begin{scnhaselementset}
+    \scnitem{scnheader}
+    \begin{scnindent}
+      \scntext{purpose}{create header that represents sc-element}
+    \end{scnindent}
+    \scnitem{scheaderlocal}
+    \begin{scnindent}
+      \scntext{purpose}{works same as \scnkeyword{scnheader}, but without resetting indents}
+    \end{scnindent}
+    \scnitem{scnstructheader}
+    \begin{scnindent}
+      \scntext{purpose}{create header that represents sc-structure}
+    \end{scnindent}
+    \scnitem{scnstructheaderlocal}
+    \begin{scnindent}
+      \scntext{purpose}{works same as \scnkeyword{scnstructheader}, but without resetting indents}
+    \end{scnindent}
+    \scnitem{scnstructidtf}
+    \begin{scnindent}
+      \scntext{purpose}{style for struct identifiers inside files of ostis-systems}
+    \end{scnindent}
+    \scnitem{scnkeyword}
+    \begin{scnindent}
+      \scntext{purpose}{style for keywords inside files of ostis-systems}
+    \end{scnindent}
+    \scnitem{scnsectionheader}
+    \begin{scnindent}
+      \scntext{purpose}{create header that represents section}
+    \end{scnindent}
+    \scnitem{scnsegmentheader}
+    \begin{scnindent}
+      \scntext{purpose}{create header that represents segment}
+    \end{scnindent}
+    \scnitem{scnfilelong}
+    \begin{scnindent}
+      \scntext{purpose}{create sc-element that represents \scnkeyword{file of the ostis-system}}
+    \end{scnindent}
+    \scnitem{scnfileimage}
+    \begin{scnindent}
+      \scntext{purpose}{create sc-element that represents \scnkeyword{file of the ostis-system} as image}
+    \end{scnindent}
+    \scnitem{scnfiletable}
+    \begin{scnindent}
+      \scntext{purpose}{create sc-element that represents \scnkeyword{file of the ostis-system} as table}
+    \end{scnindent}
+    \scnitem{scnfileclass}
+    \scnitem{scnnonamednode}
+    \begin{scnindent}
+      \scntext{purpose}{create sc-element without sc-identifier}
+    \end{scnindent}
+    \scnitem{scnsourcecomment}
+    \begin{scnindent}
+      \scntext{purpose}{create comment in knowledge base source code}
+    \end{scnindent}
+    \scnitem{scnendfragmentcomment}
+    \begin{scnindent}
+      \scntext{purpose}{create comment in knowledge base source code}
+      \scntext{note}{used at the end of any fragment (e.g. segment, section and so on)}
+    \end{scnindent}
+    \scnitem{scnendcurrentsectioncomment}
+    \begin{scnindent}
+      \scntext{purpose}{create comment in knowledge base source code}
+      \scntext{note}{used at the end of sections}
+    \end{scnindent}
+    \scnitem{scnendsegmentcomment}
+    \begin{scnindent}
+      \scntext{purpose}{create comment in knowledge base source code}
+      \scntext{note}{used at the end of segments}
+    \end{scnindent}
+    \scnitem{scnqq}
+    \begin{scnindent}
+      \scntext{purpose}{alias for creating quotes of the first level}
+    \end{scnindent}
+    \scnitem{scnqqi}
+    \begin{scnindent}
+      \scntext{purpose}{alias for creating quotes of the second level}
+    \end{scnindent}
+  \end{scnhaselementset}
+
+  \scnheader{basic relation}
+  \begin{scnhaselementset}
+    \scnitem{scnrelfrom}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header}
+    \end{scnindent}
+    \scnitem{scnrelsuperset}
+    \begin{scnindent}
+      \scntext{purpose}{create subset of previous header with some relation}
+    \end{scnindent}
+    \scnitem{scnvarrelfrom}
+    \begin{scnindent}
+      \scntext{purpose}{create variable positive relation from previous header}
+    \end{scnindent}
+    \scnitem{scnrelto}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation to previous header}
+    \end{scnindent}
+    \scnitem{scnvarrelto}
+    \begin{scnindent}
+      \scntext{purpose}{create variable positive relation to previous header}
+    \end{scnindent}
+    \scnitem{scnrelboth}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from and to previous header}
+    \end{scnindent}
+    \scnitem{scneq}
+    \begin{scnindent}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
+    \end{scnindent}
+    \scnitem{scneqfile}
+    \begin{scnindent}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
+      \scntext{note}{for use with files as second domain}
+    \end{scnindent}
+    \scnitem{scneqimage}
+    \begin{scnindent}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
+      \scntext{note}{for use with images as second domain}
+    \end{scnindent}
+    \scnitem{scneqtable}
+    \begin{scnindent}
+      \scntext{purpose}{used for semantic equivalence relation for previous header}
+      \scntext{note}{for use with tables as second domain}
+    \end{scnindent}
+    \scnitem{scneqfileclass}
+    \scnitem{scnsubset}
+    \begin{scnindent}
+      \scntext{purpose}{create superset for previous header}
+    \end{scnindent}
+    \scnitem{scnnotsubset}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header is not a subset of some set}
+    \end{scnindent}
+    \scnitem{scnsuperset}
+    \begin{scnindent}
+      \scntext{purpose}{create a subset for previous header}
+    \end{scnindent}
+    \scnitem{scniselement}
+    \begin{scnindent}
+      \scntext{purpose}{mark previous header as a constant element of some set}
+    \end{scnindent}
+    \scnitem{scnisvarelement}
+    \begin{scnindent}
+      \scntext{purpose}{mark previous header as a variable element of some set}
+    \end{scnindent}
+    \scnitem{scnhaselement}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header has some constant element}
+    \end{scnindent}
+    \scnitem{scnhasvarelement}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header has some variable element}
+    \end{scnindent}
+    \scnitem{scnhaselementrole}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header has some constant element with role in it}
+    \end{scnindent}
+    \scnitem{scnhasvarelementrole}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header has some variable element with role in it}
+    \end{scnindent}
+    \scnitem{scniselementrole}
+    \begin{scnindent}
+      \scntext{purpose}{mark previous header as a constant element of some set with role in it}
+    \end{scnindent}
+    \scnitem{scnidtf}
+    \begin{scnindent}
+      \scntext{purpose}{create identifier of previous header}
+    \end{scnindent}
+    \scnitem{scnidtftext}
+    \begin{scnindent}
+      \scntext{purpose}{create identifier of previous header with dome relation}
+    \end{scnindent}
+    \scnitem{scntext}
+    \begin{scnindent}
+      \scntext{purpose}{create relation from previous header to some \scnkeyword{file of the ostis-system}}
+    \end{scnindent}
+  \end{scnhaselementset}
+
+  \scnheader{advanced structure}
+  \begin{scnhaselementset}
+    \scnitem{SCn}
+    \begin{scnindent}
+      \scntext{purpose}{wraps all \scnkeyword{sc.n-text}}
+    \end{scnindent}
+    \scnitem{scnindent}
+    \begin{scnindent}
+      \scntext{purpose}{create new indent to make all following connectors until the end of environment incident with the previous header}
+    \end{scnindent}
+    \scnitem{scnitemize}
+    \begin{scnindent}
+      \scntext{purpose}{create itemized list inside \scnkeyword{file of the ostis-system} of level 1}
+    \end{scnindent}
+    \scnitem{scnitemizeii}
+    \begin{scnindent}
+      \scntext{purpose}{create itemized list inside \scnkeyword{file of the ostis-system} of level 2}
+    \end{scnindent}
+    \scnitem{scnitemizeiii}
+    \begin{scnindent}
+      \scntext{purpose}{create itemized list inside \scnkeyword{file of the ostis-system} of level 3}
+    \end{scnindent}
+    \scnitem{scnenumerate}
+    \begin{scnindent}
+      \scntext{purpose}{create enumerated list inside \scnkeyword{file of the ostis-system}}
+    \end{scnindent}
+    \scnitem{scnstruct}
+    \begin{scnindent}
+      \scntext{purpose}{create \scnkeyword{sctructure} to specify its content inside environment}
+    \end{scnindent}
+    \scnitem{scnsubstruct}
+    \begin{scnindent}
+      \scntext{purpose}{this macros is similar to \scnkeyword{scnstruct} but represents immersion operation semantics}
+    \end{scnindent}
+    \scnitem{scnset}
+    \begin{scnindent}
+      \scntext{purpose}{create \scnkeyword{sc-set} to specify its content inside environment}
+    \end{scnindent}
+    \scnitem{scnvector}
+    \begin{scnindent}
+      \scntext{purpose}{create oriented \scnkeyword{sc-set} to specify its content inside environment}
+    \end{scnindent}
+    \scnitem{scnhierstruct}
+  \end{scnhaselementset}
+  
+  \scnheader{advanced relation}
+  \begin{scnhaselementset}
+    \scnitem{scnitem}
+    \begin{scnindent}
+      \scntext{purpose}{create item in \scnkeyword{advanced relation} environments}
+    \end{scnindent}
+    \scnitem{scnfileitem}
+    \begin{scnindent}
+      \scntext{purpose}{create item in \scnkeyword{advanced relation} environments represented with \scnkeyword{file of the ostis-system}}
+    \end{scnindent}
+    \scnitem{scnrelfromlist}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnreltolist}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation to previous header from list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnrelbothlist}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to list of \scnkeyword{sc-elements} and vice versa}
+    \end{scnindent}
+    \scnitem{scnrelfromset}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnrelfromvector}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation from previous header to oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnreltoset}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation to previous header from unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnreltovector}
+    \begin{scnindent}
+      \scntext{purpose}{create constant positive relation to previous header from oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnhaselementset}
+    \begin{scnindent}
+      \scntext{puprose}{mark that previous header has unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements} as constant element}
+    \end{scnindent}
+    \scnitem{scnhaselementvector}
+    \begin{scnindent}
+      \scntext{puprose}{mark that previous header has oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements} as constant element}
+    \end{scnindent}
+    \scnitem{scneqtoset}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header is semantically equivalent to unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scneqtovector}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header is semantically equivalent to oriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnhassubset}
+    \begin{scnindent}
+      \scntext{purpose}{mark that previous header includes unoriented \scnkeyword{sc-set} containing list of \scnkeyword{sc-elements}}
+    \end{scnindent}
+    \scnitem{scnhassubstruct}
+    \begin{scnindent}
+      \scntext{purpose}{this macros is similar to \scnkeyword{scnhassubset} but represents immersion operation semantics}
+    \end{scnindent}
+  \end{scnhaselementset}
+
+  \scnheader{SCn variable}
+  \begin{scnhaselementset}
+    \scnitem{tabsize}
+    \begin{scnindent}
+      \scntext{purpose}{set length of indents}
+    \end{scnindent}
+    \scnitem{scnsupergroupsign}
+    \begin{scnindent}
+      \scntext{purpose}{sign to represent classes of classes}
+    \end{scnindent}
+    \scnitem{scnrolesign}
+    \begin{scnindent}
+      \scntext{purpose}{sign to represent role relations}
+    \end{scnindent}
+  \end{scnhaselementset}
+  \newpage
+\end{SCn}
+\end{document}
