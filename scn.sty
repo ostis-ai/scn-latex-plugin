@@ -673,6 +673,16 @@
   \end{scnindent}
 }
 
+\newenvironment{scnhaselementrolelist}[1]{%
+  \par
+  \settab$\bm{\ni}$\makediff{\insize}\scnrolerel{#1}
+  \begin{scnindent}%
+    \begin{scnlist}%
+}{
+    \end{scnlist}
+  \end{scnindent}
+}
+
 \newenvironment{scnhaselementset}{%
   \par
   \settab$\bm{\ni}$
