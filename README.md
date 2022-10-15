@@ -50,3 +50,9 @@ docker run -v </abspath/to/project/folder>:/workdir ostis/scn-latex-plugin:lates
 The code above will result in a following .pdf:
 
 ![](./docs/img/example.png)
+
+Build documentation locally to learn more about commands:
+```
+TEXINPUTS=./scn: latexmk -pdf -bibtex ./docs/docs.tex
+```
+The _docs.pdf_ file should be generated in your current directory.
