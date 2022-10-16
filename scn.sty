@@ -125,7 +125,7 @@
 \newcommand{\scnheader}[1]{%
   \setlength{\hangindent}{0em}
   \setlength{\parskip}{\baselineskip}
-  \par\textit{\textbf{#1}}
+  \par{\itshape\bfseries#1}
   \setlength{\parskip}{0em}
   \par
 }
@@ -133,25 +133,25 @@
 \newcommand{\scnstructheader}[1]{%
   \setlength{\hangindent}{0em}
   \setlength{\parskip}{\baselineskip}
-  \par\textit{\textbf{\textspaced{#1}}}
+  \par{\itshape\bfseries\textspaced{#1}}
   \setlength{\parskip}{0em}
   \par
 }
 
 \newcommand{\scnheaderlocal}[1]{%
-  \settab\textit{\textbf{#1}}\par
+  \settab{\itshape\bfseries#1}\par
 }
 
 \newcommand{\scnstructheaderlocal}[1]{%
-  \settab\textit{\textbf{\textspaced{#1}}}\par
+  \settab{\itshape\bfseries\textspaced{#1}}\par
 }
 
 \newcommand{\scnstructidtf}[1]{%
-  \textit{\textspaced{#1}}
+  {\itshape\textspaced{#1}}%
 }
 
 \newcommand{\scnkeyword}[1]{%
-  \textit{\textbf{#1}}
+  {\itshape\bfseries#1}%
 }
 
 \newcommand{\scnsectionheader}[1]{%
@@ -169,22 +169,22 @@
 
 \newcommand{\scnrel}[1]{%
   \settab\sethind%
-  \textit{#1}*{\normalfont:~}\par
+  {\itshape#1}*{\normalfont:~}\par
 }
 
 \newcommand{\scnvarrel}[1]{%
   \settab\sethind%
-  \textit{#1}*{\normalfont::~}\par
+  {\itshape#1}*{\normalfont::~}\par
 }
 
 \newcommand\scnrolerel[1]{%
   \settab\sethind%
-  \textit{#1}\scnrolesign{\normalfont:~}\par
+  {\itshape#1}\scnrolesign{\normalfont:~}\par
 }
 
 \newcommand\scnvarrolerel[1]{%
   \settab\sethind%
-  \textit{#1}\scnrolesign{\normalfont::~}\par
+  {\itshape#1}\scnrolesign{\normalfont::~}\par
 }
 
 \RequirePackage{calc}
@@ -198,7 +198,7 @@
     \setlength{\parindent}{0em}
     \setlength{\itemindent}{0em}
     \setlength{\parskip}{\fileparskip}
-    \hspace{-0.4em}\normalfont\textbf{[}#1\textbf{]}
+    \hspace{-0.4em}\normalfont{\bfseries[}#1{\bfseries]}
   \end{adjustwidth}
 }
 
@@ -211,10 +211,10 @@
     \setlength{\parindent}{0em}
     \setlength{\itemindent}{0em}
     \setlength{\parskip}{0em}
-    \normalfont\textbf{[}\hfill\\
+    \normalfont{\bfseries[}\hfill\\
       \cellcolor{white}
-      \includegraphics[width=#1]{#2}\\
-      \textbf{]}
+      \includegraphics[width=#1]{#2}\\%
+      {\bfseries]}
   \end{adjustwidth}
 }
 
@@ -267,7 +267,7 @@
 }
 
 \newcommand{\scneq}[1]{%
-  \settab\sethind$\bm{=}$\makediff{\eqsize}\textit{#1}\par
+  \settab\sethind$\bm{=}$\makediff{\eqsize}{\itshape#1}\par
 }
 
 \newcommand{\scneqfile}[1]{%
@@ -287,10 +287,10 @@
     \setlength{\parindent}{0em}
     \setlength{\itemindent}{0em}
     \setlength{\parskip}{0em}
-    \normalfont\textbf{[}
+    \normalfont{\bfseries[}
       \rowcolors{1}{white}{white}
-      #1
-      \textbf{]}
+      #1%
+      {\bfseries]}
   \end{adjustwidth}
 }
 
@@ -306,7 +306,7 @@
     \setlength{\parindent}{0em}
     \setlength{\itemindent}{0em}
     \setlength{\parskip}{\fileparskip}
-    \hspace{-0.7em}\normalfont\textbf{![}#1\textbf{]!}
+    \hspace{-0.7em}\normalfont{\bfseries![}#1{\bfseries]!}
   \end{adjustwidth}
 }
 
@@ -319,38 +319,38 @@
 }
 
 \newcommand{\scnsubset}[1]{%
-  \settab\sethind$\bm{\subset}$\makediff{\subsetsize}\textit{#1}\par
+  \settab\sethind$\bm{\subset}$\makediff{\subsetsize}{\itshape#1}\par
 }
 
 \newcommand{\scnnotsubset}[1]{%
-  \settab\sethind$\bm{\not\subset}$\makediff{\subsetsize}\textit{#1}\par
+  \settab\sethind$\bm{\not\subset}$\makediff{\subsetsize}{\itshape#1}\par
 }
 
 \newcommand{\scnsuperset}[1]{%
-  \settab\sethind$\bm{\supset}$\makediff{\subsetsize}\textit{#1}\par
+  \settab\sethind$\bm{\supset}$\makediff{\subsetsize}{\itshape#1}\par
 }
 
 \newcommand{\scniselement}[1]{%
-  \settab\sethind$\bm{\in}$\makediff{\insize}\textit{#1}\par
+  \settab\sethind$\bm{\in}$\makediff{\insize}{\itshape#1}\par
 }
 
 \newcommand{\scnisvarelement}[1]{%
-  \settab\sethind\textunderscore$\bm{\in}$\makediff{\insizevar}\textit{#1}\par
+  \settab\sethind\textunderscore$\bm{\in}$\makediff{\insizevar}{\itshape#1}\par
 }
 
 \newcommand{\scnhaselement}[1]{%
-  \settab\sethind$\bm{\ni}$\makediff{\insize}\textit{#1}\par
+  \settab\sethind$\bm{\ni}$\makediff{\insize}{\itshape#1}\par
 }
 
 \newcommand{\scnhasvarelement}[1]{%
-  \settab\settab\textunderscore$\bm{\ni}$\makediff{\insizevar}\textit{#1}\par
+  \settab\settab\textunderscore$\bm{\ni}$\makediff{\insizevar}{\itshape#1}\par
 }
 
 \newcommand{\scnhaselementrole}[2]{%
   \settab$\bm{\ni}$\makediff{\insize}\scnrolerel{#1}
   \begin{scnindent}
     \settab\sethind%
-    \textit{#2}
+    {\itshape#2}
   \end{scnindent}
   \par
 }
@@ -358,7 +358,7 @@
 \newcommand{\scnhasvarelementrole}[2]{%
   \settab\textunderscore$\bm{\ni}$\makediff{\insizevar}\scnvarrolerel{#1}
   \begin{scnindent}
-    \settab\sethind\textit{#2}
+    \settab\sethind{\itshape#2}
   \end{scnindent}
   \par
 }
@@ -366,7 +366,7 @@
 \newcommand{\scniselementrole}[2]{%
   \settab$\bm{\in}$\makediff{\insize}\scnrolerel{#1}
   \begin{scnindent}
-    \settab\sethind\textit{#2}
+    \settab\sethind{\itshape#2}
   \end{scnindent}
   \par
 }
@@ -409,7 +409,7 @@
     \justify
     \setlength{\parindent}{0em}
     \setlength{\itemindent}{0em}%
-    \normalfont \textbf{/*}~#1{}~\textbf{*/}
+    \normalfont {\bfseries/*}~#1{}~{\bfseries*/}
   \end{adjustwidth}
 }
 
@@ -419,20 +419,20 @@
     \setlength{\parindent}{0em}
     \setlength{\itemindent}{0em}%
     \vspace{-\baselineskip}\hspace{\tabsize}
-    \normalfont \textbf{/*}~#1{}~\textbf{*/}
+    \normalfont {\bfseries/*}~#1{}~{\bfseries*/}
   \end{adjustwidth}
 }
 
 \newcommand{\scnendfragmentcomment}[1]{%
-  \scnsourcecommentinline{Завершили ``\textit{#1}''}
+  \scnsourcecommentinline{Завершили ``{\itshape#1}''}
 }
 
 \newcommand{\scnendcurrentsectioncomment}{%
-  \scnsourcecommentinline{Завершили раздел ``\textit{\currentname}''}
+  \scnsourcecommentinline{Завершили раздел ``{\itshape\currentname}''}
 }
 
 \newcommand{\scnendsegmentcomment}[1]{%
-  \scnsourcecommentinline{Завершили Сегмент ``\textit{#1}''}
+  \scnsourcecommentinline{Завершили Сегмент ``{\itshape#1}''}
 }
 
 
@@ -514,7 +514,7 @@
   \providecommand{\scnitem}[1]{%
     \settab
     \sethind
-    \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
+    \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
   }
   \providecommand{\scnfileitem}[1]{
     \hspace{0.5em}$\bullet$
@@ -524,13 +524,13 @@
       \setlength{\parindent}{0em}
       \setlength{\itemindent}{0em}
       \setlength{\parskip}{0em}
-      \hspace{-0.4em}\normalfont\textbf{[}##1\textbf{]}
+      \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
     \end{adjustwidth}
   }
   \renewcommand{\scnitem}[1]{%
     \settab
     \sethind
-    \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
+    \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
   }
 }{}
 
@@ -538,7 +538,7 @@
   \providecommand{\scnitem}[1]{%
     \settab
     \sethind
-    \par$\bullet$\makediff{\bulletsize}\textit{##1}\par
+    \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
   }
   \providecommand{\scnfileitem}[1]{%
     \hspace{0.5em}$\bullet$
@@ -548,13 +548,13 @@
       \setlength{\parindent}{0em}
       \setlength{\itemindent}{0em}
       \setlength{\parskip}{0em}
-      \hspace{-0.4em}\normalfont\textbf{[}##1\textbf{]}
+      \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
     \end{adjustwidth}
   }
   \renewcommand{\scnitem}[1]{%
     \setlength{\parindent}{\calctab+\bulletsize}
     \sethind
-    \par$\bullet$\makediff{\bulletbracketsize}\textit{##1}\par
+    \par$\bullet$\makediff{\bulletbracketsize}{\itshape##1}\par
   }
 }{}
 
