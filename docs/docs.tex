@@ -30,7 +30,7 @@
         \scnitem{advanced relation}
       \end{scnrelfromset}
     \end{scnindent}
-    \scnitem{SCn variable}
+    \scnitem{scn-latex-plugin variable}
   \end{scnrelfromset}
 
   \scnheader{structure and table of contents}
@@ -342,7 +342,7 @@
     \end{scnindent}
   \end{scnhaselementset}
 
-  \scnheader{SCn variable}
+  \scnheader{scn-latex-plugin variable}
   \begin{scnhaselementset}
     \scnitem{tabsize}
     \begin{scnindent}
@@ -356,7 +356,74 @@
     \begin{scnindent}
       \scntext{purpose}{sign to represent role relations}
     \end{scnindent}
+    \scnitem{language specific variables}
+    \begin{scnindent}
+        \scnhaselement{segment}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{Segment} word in different languages}
+        \end{scnindent}
+        \scnhaselement{complfragm}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{Completed} word in different languages}
+        \end{scnindent}
+        \scnhaselement{complsect}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{Completed Section} in different languages}
+        \end{scnindent}
+        \scnhaselement{complsegm}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{Completed Segment} in different languages}
+        \end{scnindent}
+        \scnhaselement{curpage}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{page number} in different languages}
+        \end{scnindent}
+        \scnhaselement{sectfamily}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{Section family} in different languages}
+        \end{scnindent}
+        \scnhaselement{sect}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{Section} in different languages}
+        \end{scnindent}
+        \scnhaselement{bibref}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{bibliographic reference} in different languages}
+        \end{scnindent}
+        \scnhaselement{annot}
+        \begin{scnindent}
+          \scntext{purpose}{represent \scnqq{annotation} in different languages}
+        \end{scnindent}
+    \end{scnindent}
   \end{scnhaselementset}
-  \newpage
+
+  \scnheader{\LaTeX plugin for SCn-code representation}
+  \scnrelfrom{default representation language}{English language}
+  \scnrelfrom{class of actions}{action. change plugin language}
+  \begin{scnindent}
+    \scnhaselement{action. change variable value}
+    \begin{scnindent}
+      \scnhaselementrole{1}{\scnnonamednode}
+      \begin{scnindent}
+        \begin{scneqtoset}
+          \scnheader{language specific variables}
+          \scnhasvarelement{varible}
+        \end{scneqtoset}
+      \end{scnindent}
+      \scnhaselementrole{2}{new value}
+      \scnrelfrom{result}{\scnnonamednode}
+      \begin{scnindent}
+        \begin{scneqtoset}
+          \scnheader{language specific variables}
+          \scnhasvarelement{varible}
+          \begin{scnindent}
+            \scnrelfrom{value}{new value}
+          \end{scnindent}
+        \end{scneqtoset}
+      \end{scnindent}
+      \scntext{explanation}{change values of all \scnkeyword{language specific variables} via renewcommand}
+    \end{scnindent}
+  \end{scnindent}
+
 \end{SCn}
 \end{document}
