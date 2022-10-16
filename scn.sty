@@ -2,9 +2,7 @@
 \ProvidesPackage{scn}
   [2022/07/26 v0.1.0 LaTeX package for SCn-code support]
 
-\RequirePackage[T2A]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[russian]{babel}
+
 %DEFINES START
 
 \newlength{\tabsize}
@@ -118,6 +116,24 @@
   \par$\pmb{|\rangle}$\par
 }
 
+\providecommand{\segment}{Segment}
+
+\providecommand{\complfragm}{Completed}
+
+\providecommand{\complsect}{Completed Section}
+
+\providecommand{\complsegm}{Completed Segment}
+
+\providecommand{\curpage}{page number}
+
+\providecommand{\sectfamily}{Section family}
+
+\providecommand{\sect}{Section}
+
+\providecommand{\bibref}{bibliographic reference}
+
+\providecommand{\annot}{annotation}
+
 %DEFINES END
 
 %SCN START
@@ -161,7 +177,7 @@
 \makeatletter
 \newcommand{\scnsegmentheader}[1]{%
   \bigskip
-  \normalfont\bfseries /*~\textspaced{Сегмент}~%
+  \normalfont\bfseries /*~\textspaced{\segment}~%
   \filldots/%
   \normalfont\textspaced{\scnheader{#1}}\par
 }
@@ -424,15 +440,15 @@
 }
 
 \newcommand{\scnendfragmentcomment}[1]{%
-  \scnsourcecommentinline{Завершили ``{\itshape#1}''}
+  \scnsourcecommentinline{\complfragm~``{\itshape#1}''}
 }
 
 \newcommand{\scnendcurrentsectioncomment}{%
-  \scnsourcecommentinline{Завершили раздел ``{\itshape\currentname}''}
+  \scnsourcecommentinline{\complsect~``{\itshape\currentname}''}
 }
 
 \newcommand{\scnendsegmentcomment}[1]{%
-  \scnsourcecommentinline{Завершили Сегмент ``{\itshape#1}''}
+  \scnsourcecommentinline{\complsegm~``{\itshape#1}''}
 }
 
 
@@ -503,6 +519,7 @@
   \setlength{\parskip}{0em}
   \begin{flushleft}
 }{%
+  \newpage
   \end{flushleft}
 }
 
