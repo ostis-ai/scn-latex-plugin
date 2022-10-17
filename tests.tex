@@ -2,20 +2,23 @@
 
 \usepackage{scn}
 
+\RequirePackage[T2A]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[main=english,russian]{babel}
+
 \addbibresource{tests/tests.bib}
 
 \begin{document}
 \input{tests/title}
 
 \begin{SCn}
+  
+  \input{tests/toc}
+  \input{tests/headers}
+  \input{tests/relations}
+  \input{tests/lists}
+  \input{tests/structs}
+  \input{tests/biblio}
 
-\input{tests/toc}
-\input{tests/headers}
-\input{tests/relations}
-\input{tests/lists}
-\input{tests/structs}
-\input{tests/biblio}
-
-\newpage
 \end{SCn}
 \end{document}

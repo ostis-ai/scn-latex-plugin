@@ -75,7 +75,7 @@
 % SECTIONS START
 
 \newcommand{\scncurrentpage}{%
-  \scnrelfrom{номер страницы}{\thepage}
+  \scnrelfrom{\curpage}{\thepage}
 }
 
 \NewDocumentCommand{\scseparatedfragment}{>{\SplitList{;}}om}{
@@ -104,7 +104,7 @@
 
 \NewDocumentCommand{\scsectionfamily}{>{\SplitList{;}}om}{
   \clearpage
-  /*~\textspaced{\bfseries \large Семейство разделов}~\filldots/
+  /*~\textspaced{\bfseries \large \sectfamily}~\filldots/
   \scnsectionheader{#2}
   
   \IfNoValueTF{#1}{
@@ -128,7 +128,7 @@
 
 \NewDocumentCommand{\scchapter}{>{\SplitList{;}}om}{
   \clearpage
-  /*~\textspaced{\bfseries \large Раздел}~\filldots/
+  /*~\textspaced{\bfseries \large \sect}~\filldots/
   \scnsectionheader{#2}
   
   \IfNoValueTF{#1}{
@@ -152,7 +152,7 @@
 
 \NewDocumentCommand{\scsection}{>{\SplitList{;}}om}{
   \clearpage
-  /*~\textspaced{\bfseries \large Раздел}~\filldots/
+  /*~\textspaced{\bfseries \large \sect}~\filldots/
   \scnsectionheader{#2}
   
   \IfNoValueTF{#1}{
@@ -182,7 +182,7 @@
 
 \NewDocumentCommand{\scsubsection}{>{\SplitList{;}}om}{
   \clearpage
-  /*~\textspaced{\bfseries \large Раздел}~\filldots/
+  /*~\textspaced{\bfseries \large \sect}~\filldots/
   \scnsectionheader{#2}
   
   \IfNoValueTF{#1}{
@@ -216,7 +216,7 @@
 
 \NewDocumentCommand{\scsubsubsection}{>{\SplitList{;}}om}{
   \clearpage
-  /*~\textspaced{\bfseries \large Раздел}~\filldots/
+  /*~\textspaced{\bfseries \large \sect}~\filldots/
   \scnsectionheader{#2}
   
   \IfNoValueTF{#1}{
@@ -254,7 +254,7 @@
 
 \NewDocumentCommand{\scparagraph}{>{\SplitList{;}}om}{
   \clearpage
-  /*~\textspaced{\bfseries \large Раздел}~\filldots/
+  /*~\textspaced{\bfseries \large \sect}~\filldots/
   \scnsectionheader{#2}
   
   \IfNoValueTF{#1}{
@@ -380,11 +380,11 @@
 
 \newcommand{\printscncite}[2]{%
   \scnheader{#2}
-  \scntext{библиографическая ссылка}{\fullcite{#1}}
+  \scntext{\bibref}{\fullcite{#1}}
 }
 
 \newcommand{\scnciteannotation}[1]{
-  \scntext{аннотация}{\citefield{#1}{annotation}}
+  \scntext{\annot}{\citefield{#1}{annotation}}
 }
 
 % BIBLIOGRAPHY END
