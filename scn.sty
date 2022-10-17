@@ -529,12 +529,12 @@
     
 \newenvironment{scnlist}{%
   \providecommand{\scnitem}[1]{%
-    \settab
-    \sethind
+    \settab\sethind
     \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
   }
-  \providecommand{\scnfileitem}[1]{
-    \hspace{0.5em}$\bullet$
+  \providecommand{\scnfileitem}[1]{%
+    \settab\sethind
+    \par$\bullet$
     \vspace{-\baselineskip}
     \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
       \justify
@@ -545,20 +545,31 @@
     \end{adjustwidth}
   }
   \renewcommand{\scnitem}[1]{%
-    \settab
-    \sethind
+    \settab\sethind
     \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
+  }
+  \renewcommand{\scnfileitem}[1]{%
+    \settab\sethind
+    \par$\bullet$
+    \vspace{-\baselineskip}
+    \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
+      \justify
+      \setlength{\parindent}{0em}
+      \setlength{\itemindent}{0em}
+      \setlength{\parskip}{0em}
+      \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
+    \end{adjustwidth}
   }
 }{}
 
 \newenvironment{scnlistset}{%
   \providecommand{\scnitem}[1]{%
-    \settab
-    \sethind
+    \settab\sethind
     \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
   }
   \providecommand{\scnfileitem}[1]{%
-    \hspace{0.5em}$\bullet$
+    \settab\sethind
+    \par$\bullet$
     \vspace{-\baselineskip}
     \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
       \justify
@@ -570,8 +581,20 @@
   }
   \renewcommand{\scnitem}[1]{%
     \setlength{\parindent}{\calctab+\bulletsize}
-    \sethind
+    \sethind\sethind
     \par$\bullet$\makediff{\bulletbracketsize}{\itshape##1}\par
+  }
+  \renewcommand{\scnfileitem}[1]{%
+    \settab\sethind
+    \par\hspace{0.5em}$\bullet$
+    \vspace{-\baselineskip}
+    \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
+      \justify
+      \setlength{\parindent}{0em}
+      \setlength{\itemindent}{0em}
+      \setlength{\parskip}{0em}
+      \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
+    \end{adjustwidth}
   }
 }{}
 
