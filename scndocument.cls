@@ -298,7 +298,7 @@
 
 % BACKGROUND START
 
-\RequirePackage[table]{xcolor}
+\RequirePackage{xcolor}
 \RequirePackage{silence}
 \WarningsOff[everypage]
 \RequirePackage[pages=all]{background}
