@@ -183,24 +183,28 @@
 }
 \makeatother
 
-\newcommand{\scnrel}[1]{%
+\NewDocumentCommand{\scnrel}{>{\SplitList{;}}m}{%
+  \providecommand\relit[1]{{\itshape##1}*{\normalfont:~}}%
   \settab\sethind%
-  {\itshape#1}*{\normalfont:~}\par
+  \ProcessList{#1}{\relit}\par
 }
 
-\newcommand{\scnvarrel}[1]{%
+\NewDocumentCommand{\scnvarrel}{>{\SplitList{;}}m}{%
+  \providecommand\varrelit[1]{{\itshape##1}*{\normalfont::~}}%
   \settab\sethind%
-  {\itshape#1}*{\normalfont::~}\par
+  \ProcessList{#1}{\varrelit}\par
 }
 
-\newcommand\scnrolerel[1]{%
+\NewDocumentCommand{\scnrolerel}{>{\SplitList{;}}m}{%
+  \providecommand\rolerelit[1]{{\itshape##1}\scnrolesign{\normalfont:~}}%
   \settab\sethind%
-  {\itshape#1}\scnrolesign{\normalfont:~}\par
+  \ProcessList{#1}{\rolerelit}\par
 }
 
-\newcommand\scnvarrolerel[1]{%
+\NewDocumentCommand{\scnvarrolerel}{>{\SplitList{;}}m}{%
+  \providecommand\varrolerelit[1]{{\itshape##1}\scnrolesign{\normalfont::~}}%
   \settab\sethind%
-  {\itshape#1}\scnrolesign{\normalfont::~}\par
+  \ProcessList{#1}{\varrolerelit}\par
 }
 
 \RequirePackage{calc}
@@ -459,7 +463,7 @@
 
 \newenvironment{scnitemize}{
   \begin{itemize}[
-      leftmargin=\calctab+\squaresize+0.4em,
+      leftmargin=\squaresize+0.4em,
       itemsep=-0.25em,
       before=\vspace{-0.8em},
       after=\vspace{-0.5em}
@@ -473,7 +477,7 @@
 
 \newenvironment{scnitemizeii}{
   \begin{itemize}[
-      leftmargin=\calctab+\doublesquaresize+0.4em,
+      leftmargin=\doublesquaresize+0.4em,
       itemsep=-0.25em,
       before=\vspace{-0.3em},
       after=\vspace{0em}
@@ -485,7 +489,7 @@
 
 \newenvironment{scnitemizeiii}{
   \begin{itemize}[
-      leftmargin=\calctab+\triplesquaresize+0.4em,
+      leftmargin=\triplesquaresize+0.4em,
       itemsep=-0.25em,
       before=\vspace{-0.3em},
       after=\vspace{0em}
