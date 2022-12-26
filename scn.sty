@@ -544,6 +544,17 @@
       {\itshape##1}\par%
     \end{scnindent}%
   }
+  \providecommand{\scnitemcustom}[1]{
+    \settabcustom$\bullet$
+    \vspace{-\baselineskip}
+    \begin{adjustwidth}{\calctabcustom+\tabsizecustom}{0em}
+      \justify
+      \setlength{\parindent}{0em}
+      \setlength{\itemindent}{0em}
+      \setlength{\parskip}{0em}
+      ##1
+    \end{adjustwidth}
+  }
   \providecommand{\scnfileitem}[1]{%
     \par$\bullet$
     \vspace{-\baselineskip}
@@ -764,5 +775,60 @@
 }
 
 % ENVIRONMENTS End
+
+%CUSTOM
+
+\newenvironment{scnrelfromlistcustom}[1]{%
+  \par
+  \settabcustom$\bm{\Rightarrow}$\makediffcustom{\arrowsize}\scnrel{#1}
+  \begin{scnindent}%
+    \begin{scnlist}%
+}{
+    \end{scnlist}
+  \end{scnindent}
+}
+
+\newlength{\tabsizecustom}
+\setlength{\tabsizecustom}{2em}
+
+\newcommand{\calctabcustom}{\dimexpr (\tabsizecustom)*\value{hind} \relax}
+
+\newcommand{\settabcustom}{\setlength{\parindent}{\calctabcustom}}
+
+\newcommand{\sethindcustom}[1][0em]{\setlength{\hangindent}{\calctabcustom+\tabsizecustom+#1}}
+
+\newcommand{\calcdiffcustom}[1]{\dimexpr \tabsizecustom-#1  \relax}
+\newcommand{\makediffcustom}[1]{\hspace{\calcdiffcustom{#1}}}
+
+\newcommand{\scnheadercustom}[1]{%
+  \setlength{\hangindent}{0em}
+  \setlength{\parskip}{\baselineskip}
+  \par#1
+  \setlength{\parskip}{0em}
+  \par
+}
+
+\newcommand{\scnfilelongcustom}[1]{
+  \vspace{-\fileparskip}
+  \begin{adjustwidth}{\calctabcustom+0.4em}{0em}
+    \justify
+    \setlength{\parindent}{0em}
+    \setlength{\itemindent}{0em}
+    \setlength{\parskip}{\fileparskip}
+    \hspace{-0.4em}\normalfont\textbf{[}#1\textbf{]}
+  \end{adjustwidth}
+}
+
+\newcommand{\scnidtfcustom}[1]{%
+  \settabcustom\sethindcustom$\bm{\coloneqq}$\makediffcustom{\coloneqsize}
+  \vspace{-\baselineskip}
+  \begin{scnindent}
+    \scnfilelongcustom{#1}
+  \end{scnindent}
+  \par
+}
+
+%CUSTOM End
+
 \endinput
 
