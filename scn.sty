@@ -83,7 +83,8 @@
 
 \newcommand{\scnstartstruct}{%
   \settab
-  \par$\pmb{=\{}$\par
+  \par$\pmb{=}$\\
+  $\pmb{\{}$\par
 }
 
 \newcommand{\scnstartsubstruct}{%
@@ -467,44 +468,6 @@
 
 \RequirePackage{enumitem}
 \RequirePackage{amssymb}
-
-\newenvironment{scnitemize}{
-  \begin{itemize}[
-      leftmargin=\squaresize+0.4em,
-      itemsep=-0.25em,
-      before=\vspace{-0.8em},
-      after=\vspace{-0.5em}
-    ]
-    \renewcommand{\labelitemi}{\scriptsize$\square$}
-    \renewcommand{\labelitemii}{\scriptsize$\square~\square$}
-    \renewcommand{\labelitemiii}{\scriptsize$\square~\square~\square$}
-}{
-  \end{itemize}
-}
-
-\newenvironment{scnitemizeii}{
-  \begin{itemize}[
-      leftmargin=\doublesquaresize+0.4em,
-      itemsep=-0.25em,
-      before=\vspace{-0.3em},
-      after=\vspace{0em}
-    ]
-    \renewcommand{\labelitemi}{\scriptsize$\square~\square$}
-}{
-  \end{itemize}
-}
-
-\newenvironment{scnitemizeiii}{
-  \begin{itemize}[
-      leftmargin=\triplesquaresize+0.4em,
-      itemsep=-0.25em,
-      before=\vspace{-0.3em},
-      after=\vspace{0em}
-    ]
-    \renewcommand{\labelitemi}{\scriptsize$\square~\square$}
-}{
-  \end{itemize}
-}
 
 \newenvironment{scnenumerate}{
   \begin{enumerate}[
