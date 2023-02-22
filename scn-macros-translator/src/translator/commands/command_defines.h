@@ -1,0 +1,8 @@
+#include "commonCommands/tex_command.h"
+#include "commonCommands/tex_one_same_command.h"
+#include "commonCommands/tex_one_to_environment_command.h"
+#include "commonCommands/tex_one_to_text_command.h"
+#include "commonCommands/tex_two_same_command.h"
+#include "commonCommands/tex_two_to_environment_command.h"
+#include "commonCommands/unique_commands.h"
+#include "commonCommands/tex_zero_same_command.h"
