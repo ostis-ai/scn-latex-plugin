@@ -48,7 +48,7 @@
 \setlength{\eqsize}{0.9em}
 
 \newlength{\substructsize}
-\setlength{\substructsize}{1.7em}
+\setlength{\substructsize}{1.8em}
 
 \newlength{\fileparskip}
 \setlength{\fileparskip}{0.5em}
@@ -92,27 +92,34 @@
   $\pmb{\{}$\par
 }
 
-\newcommand{\scnstartset}{%
-  \par$\pmb{\{}$\par
+\RequirePackage{ifthen}
+\NewDocumentCommand{\scnstartset}{o}{%
+  \ifthenelse{\equal{#1}{local}}{}{\par}%
+  $\pmb{\{}$\par
 }
 
-\newcommand{\scnendstruct}{%
+\NewDocumentCommand{\scnendstruct}{o}{%
+  \ifthenelse{\equal{#1}{local}}{\settab}{}%
   \par$\pmb{\}}$\par
 }
 
-\newcommand{\scnstartvector}{%
-  \par$\pmb{\langle}$\par
+\NewDocumentCommand{\scnstartvector}{o}{%
+  \ifthenelse{\equal{#1}{local}}{}{\par}%
+  $\pmb{\langle}$\par
 }
 
-\newcommand{\scnendvector}{%
+\NewDocumentCommand{\scnendvector}{o}{%
+  \ifthenelse{\equal{#1}{local}}{\settab}{}%
   \par$\pmb{\rangle}$\par
 }
 
-\newcommand{\scnstarthierstruct}{%
-  \par$\pmb{\langle|}$\par
+\NewDocumentCommand{\scnstarthierstruct}{o}{%
+  \ifthenelse{\equal{#1}{local}}{}{\par}%
+  $\pmb{\langle|}$\par
 }
 
-\newcommand{\scnendhierstruct}{%
+\NewDocumentCommand{\scnendhierstruct}{o}{%
+  \ifthenelse{\equal{#1}{local}}{\settab}{}%
   \par$\pmb{|\rangle}$\par
 }
 
@@ -530,13 +537,14 @@
 {\addtocounter{hind}{1}}
 {\addtocounter{hind}{-1}}
     
-\newenvironment{scnlist}{%
+\NewDocumentCommand{\scnlist}{o}{%
   \providecommand{\scnitem}[1]{%
-    \settab\sethind
-    \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
+    \par$\bullet$\makediff{\bulletsize}%
+    \begin{scnindent}%
+      \settab\sethind{\itshape##1}\par%
+    \end{scnindent}%
   }
   \providecommand{\scnfileitem}[1]{%
-    \settab\sethind
     \par$\bullet$
     \vspace{-\baselineskip}
     \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
@@ -547,86 +555,54 @@
       \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
     \end{adjustwidth}
   }
-  \renewcommand{\scnitem}[1]{%
-    \settab\sethind
-    \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
-  }
-  \renewcommand{\scnfileitem}[1]{%
-    \settab\sethind
-    \par$\bullet$
-    \vspace{-\baselineskip}
-    \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
-      \justify
-      \setlength{\parindent}{0em}
-      \setlength{\itemindent}{0em}
-      \setlength{\parskip}{0em}
-      \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
-    \end{adjustwidth}
-  }
-}{}
-
-\newenvironment{scnlistset}{%
-  \providecommand{\scnitem}[1]{%
-    \settab\sethind
-    \par$\bullet$\makediff{\bulletsize}{\itshape##1}\par
-  }
-  \providecommand{\scnfileitem}[1]{%
-    \settab\sethind
-    \par$\bullet$
-    \vspace{-\baselineskip}
-    \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
-      \justify
-      \setlength{\parindent}{0em}
-      \setlength{\itemindent}{0em}
-      \setlength{\parskip}{0em}
-      \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
-    \end{adjustwidth}
-  }
-  \renewcommand{\scnitem}[1]{%
-    \setlength{\parindent}{\calctab+\bulletsize}
-    \sethind\sethind
-    \par$\bullet$\makediff{\bulletbracketsize}{\itshape##1}\par
-  }
-  \renewcommand{\scnfileitem}[1]{%
-    \settab\sethind
-    \par\hspace{0.5em}$\bullet$
-    \vspace{-\baselineskip}
-    \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
-      \justify
-      \setlength{\parindent}{0em}
-      \setlength{\itemindent}{0em}
-      \setlength{\parskip}{0em}
-      \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
-    \end{adjustwidth}
-  }
+  \ifthenelse{\equal{#1}{local}}{
+    \setlength{\parindent}{\calctab+\bulletsize}%
+    \vspace{-\baselineskip}%
+    \renewcommand{\scnitem}[1]{%
+      \par$\bullet$\makediff{\bulletbracketsize}%
+      \begin{scnindent}%
+        \settab\sethind{\itshape##1}\par%
+      \end{scnindent}%
+    }
+    \renewcommand{\scnfileitem}[1]{%
+      \par$\bullet$
+      \vspace{-\baselineskip}
+      \begin{adjustwidth}{\calctab+\tabsize+0.4em}{0em}
+        \justify
+        \setlength{\parindent}{0em}
+        \setlength{\itemindent}{0em}
+        \setlength{\parskip}{0em}
+        \hspace{-0.4em}\normalfont{\bfseries[}##1{\bfseries]}
+      \end{adjustwidth}
+    }
+  }{}
 }{}
 
 \newenvironment{scnrelfromlist}[1]{%
-  \par
-  \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
+  \par\settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
+    \settab\sethind%
     \begin{scnlist}%
 }{
     \end{scnlist}
   \end{scnindent}
 }
 
-
 \newenvironment{scnreltolist}[1]{%
-  \par
-  \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
-  \begin{scnindent}
-    \begin{scnlist}
+  \par\settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
+  \begin{scnindent}%
+    \settab\sethind%
+    \begin{scnlist}%
 }{
     \end{scnlist} 
   \end{scnindent}
 }
 
 \newenvironment{scnrelbothlist}[1]{%
-  \par
-  \settab$\bm{\Leftrightarrow}$\makediff{\arrowsize}\scnrel{#1}
-  \begin{scnindent}
-    \begin{scnlist}
+  \par\settab$\bm{\Leftrightarrow}$\makediff{\arrowsize}\scnrel{#1}
+  \begin{scnindent}%
+    \settab\sethind%
+    \begin{scnlist}%
 }{
     \end{scnlist} 
   \end{scnindent}
@@ -645,81 +621,70 @@
 {\begin{set}{\scnstartsubstruct}{\scnendstruct}}
 {\end{set}}
 
-\newenvironment{scnset}
-{\begin{set}{\scnstartset}{\scnendstruct}}
+\NewDocumentEnvironment{scnset}{o}
+{\begin{set}{\scnstartset[#1]}{\scnendstruct[#1]}}
 {\end{set}}
 
-\newenvironment{scnvector}
-{\begin{set}{\scnstartvector}{\scnendvector}}
+\NewDocumentEnvironment{scnvector}{o}
+{\begin{set}{\scnstartvector[#1]}{\scnendvector[#1]}}
 {\end{set}}
 
-\newenvironment{scnhierstruct}
-{\begin{set}{\scnstarthierstruct}{\scnendhierstruct}}
+\NewDocumentEnvironment{scnhierstruct}{o}
+{\begin{set}{\scnstarthierstruct[#1]}{\scnendhierstruct[#1]}}
 {\end{set}}
 
 \newenvironment{scnrelfromset}[1]{%
-  \par
-  \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
-  \begin{scnindent}
-    \settab
-    \begin{scnset}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+  \par\settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
+  \begin{scnindent}%
+    \settab\sethind%
+    \begin{scnset}%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnset}
   \end{scnindent}
 }
 
 \newenvironment{scnrelfromvector}[1]{%
-  \par
-  \settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
-  \begin{scnindent}
-    \settab
-    \begin{scnvector}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+  \par\settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
+  \begin{scnindent}%
+    \settab\sethind%
+    \begin{scnvector}%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnvector}
   \end{scnindent}
 }
 
 \newenvironment{scnreltoset}[1]{%
   \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
-  \begin{scnindent}
-    \settab
-    \begin{scnset}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+  \begin{scnindent}%
+    \settab\sethind
+    \begin{scnset}%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnset}
   \end{scnindent}
 }
 
 \newenvironment{scnreltovector}[1]{%
-  \par
-  \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
-  \begin{scnindent}
-    \settab
-    \begin{scnvector}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+  \par\settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
+  \begin{scnindent}%
+    \settab\sethind
+    \begin{scnvector}%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnvector}
   \end{scnindent}
 }
 
 \newenvironment{scnhaselementrolelist}[1]{%
-  \par
-  \settab$\bm{\ni}$\makediff{\insize}\scnrolerel{#1}
+  \par\settab$\bm{\ni}$\makediff{\insize}\scnrolerel{#1}
   \begin{scnindent}%
+    \settab\sethind%
     \begin{scnlist}%
 }{
     \end{scnlist}
@@ -727,97 +692,73 @@
 }
 
 \newenvironment{scnhaselementset}{%
-  \par
-  \settab$\bm{\ni}$
-  \begin{scnindent}
-    \settab
-    \vspace{-\baselineskip}
-    \begin{scnset}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+  \par\settab$\bm{\ni}$\makediff{\insize}%
+  \begin{scnindent}%
+    \settab\sethind%
+    \begin{scnset}[local]%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnset}
   \end{scnindent}
 }
 
 \newenvironment{scnhaselementvector}{%
-  \par
-  \settab$\bm{\ni}$%
+  \par\settab$\bm{\ni}$\makediff{\insize}%
   \begin{scnindent}%
-    \settab
-    \vspace{-\baselineskip}
-    \begin{scnvector}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+    \settab\sethind
+    \begin{scnvector}[local]
+      \begin{scnlist}[local]
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnvector}
   \end{scnindent}
 }
 
 \newenvironment{scneqtoset}{%
-  \par
-  \settab$\bm{=}$%
+  \par\settab$\bm{=}$\makediff{\eqsize}%
   \begin{scnindent}%
-    \settab
-    \vspace{-\baselineskip}
-    \begin{scnset}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+    \settab\sethind%
+    \begin{scnset}[local]%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnset}
   \end{scnindent}
 }
 
 \newenvironment{scneqtovector}{%
-  \par
-  \settab$\bm{=}$%
+  \par\settab$\bm{=}$\makediff{\eqsize}%
   \begin{scnindent}%
-    \settab
-    \vspace{-\baselineskip}
-    \begin{scnvector}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+    \settab\sethind%
+    \begin{scnvector}[local]%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnvector}
   \end{scnindent}
 }
 
 \newenvironment{scnhassubstruct}{%
-  \par
-  \settab$\bm{\supset=}$%
+  \par\settab$\bm{\supset=}$\makediff{\substructsize}%
   \begin{scnindent}%
-    \settab
-    \vspace{-\baselineskip}
-    \begin{scnset}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+    \settab\sethind%
+    \begin{scnset}[local]%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnset}
   \end{scnindent}
 }
 
 \newenvironment{scnhassubset}{%
-  \par
-  \settab$\bm{\supset}$
-  \begin{scnindent}
-    \settab
-    \vspace{-\baselineskip}
-    \begin{scnset}
-      \vspace{-\baselineskip}
-      \begin{scnlistset}
+  \par\settab$\bm{\supset}$\makediff{\subsetsize}%
+  \begin{scnindent}%
+    \settab\sethind%
+    \begin{scnset}[local]%
+      \begin{scnlist}[local]%
 }{
-      \end{scnlistset}
-      \settab
+      \end{scnlist}
     \end{scnset}
   \end{scnindent}
 }
