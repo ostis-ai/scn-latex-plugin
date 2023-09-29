@@ -35,15 +35,6 @@
 \newlength{\bracketsize}
 \setlength{\bracketsize}{0.7em}
 
-\newlength{\squaresize}
-\setlength{\squaresize}{0.7em}
-
-\newlength{\doublesquaresize}
-\setlength{\doublesquaresize}{1.6em}
-
-\newlength{\triplesquaresize}
-\setlength{\triplesquaresize}{2.5em}
-
 \newlength{\eqsize}
 \setlength{\eqsize}{0.9em}
 
@@ -470,46 +461,52 @@
 
 \newenvironment{scnitemize}{
   \begin{itemize}[
-      leftmargin=\squaresize+0.4em,
+      leftmargin=\calctab-0.4em,
       itemsep=-0.25em,
+      labelsep=\calcdiff{\bulletsize-0.4em},
       before=\vspace{-0.8em},
       after=\vspace{-0.5em}
     ]
-    \renewcommand{\labelitemi}{\scriptsize$\square$}
-    \renewcommand{\labelitemii}{\scriptsize$\square~\square$}
-    \renewcommand{\labelitemiii}{\scriptsize$\square~\square~\square$}
+    \renewcommand{\labelitemi}{$\bullet$}
+    \renewcommand{\labelitemii}{$\bullet$}
+    \renewcommand{\labelitemiii}{$\bullet$}
 }{
   \end{itemize}
 }
 
 \newenvironment{scnitemizeii}{
   \begin{itemize}[
-      leftmargin=\doublesquaresize+0.4em,
+      leftmargin=\calctab,
       itemsep=-0.25em,
+      labelsep=\calcdiff{\bulletsize},
+      itemindent=-0.25em,
       before=\vspace{-0.3em},
       after=\vspace{0em}
     ]
-    \renewcommand{\labelitemi}{\scriptsize$\square~\square$}
+    \renewcommand{\labelitemi}{$\bullet$}
 }{
   \end{itemize}
 }
 
 \newenvironment{scnitemizeiii}{
   \begin{itemize}[
-      leftmargin=\triplesquaresize+0.4em,
+      leftmargin=\calctab,
       itemsep=-0.25em,
+      labelsep=\calcdiff{\bulletsize},
+      itemindent=-0.8em,
       before=\vspace{-0.3em},
       after=\vspace{0em}
     ]
-    \renewcommand{\labelitemi}{\scriptsize$\square~\square$}
+    \renewcommand{\labelitemi}{$\bullet$}
 }{
   \end{itemize}
 }
 
 \newenvironment{scnenumerate}{
   \begin{enumerate}[
-      leftmargin=\calctab+0.9em+0.4em,
+      leftmargin=\calctab-0.4em,
       itemsep=-0.25em,
+      labelsep=\calcdiff{\bulletsize-0.65em},
       before=\vspace{-0.8em},
       after=\vspace{-0.5em}
     ]
