@@ -145,6 +145,19 @@
   \par
 }
 
+\newcommand{\scnfilelongheader}[1]{%
+  \vspace{-\fileparskip}
+    \begin{adjustwidth}{\calctab+0.4em}{0em}
+    \justify
+    \setlength{\parindent}{0em}
+    \setlength{\itemindent}{0em}
+    \setlength{\parskip}{\fileparskip}
+    \hspace{-0.4em}\normalfont{\bfseries[}#1{\bfseries]}
+  \end{adjustwidth}
+}
+
+\newcommand{\scnfileheader}[1]{\scnfilelongheader{#1}}
+
 \newcommand{\scnstructheader}[1]{%
   \setlength{\hangindent}{0em}
   \setlength{\parskip}{\baselineskip}
@@ -521,20 +534,38 @@
 
 \newcommand{\scnqqi}[1]{``#1''}
 
+
+\newcommand{\scnleftcurlbrace}{\{}
+
+\newcommand{\scnrightcurlbrace}{\}}
+
+\newcommand{\scnleftsquarebrace}{\[}
+
+\newcommand{\scnleftsquarebracene}{[}
+
+\newcommand{\scnrightsquarebrace}{\]}
+
+\newcommand{\scnrightsquarebracene}{]}
+
+\newcommand{\scnstar}{*}
+
+\newcommand{\scnslash}{/}
+
+\newcommand{\scnhyphen}{-}
+
 % ENVIRONMENTS Start
 
 \newenvironment{SCn}{%
-  \setcounter{hind}{0}% 
+  \setcounter{hind}{0}%
   \setlength{\parskip}{0em}
   \begin{flushleft}
 }{%
   \end{flushleft}
 }
-
 \newenvironment{scnindent}
 {\addtocounter{hind}{1}}
 {\addtocounter{hind}{-1}}
-    
+
 \NewDocumentCommand{\scnlist}{o}{%
   \providecommand{\scnitem}[1]{%
     \par$\bullet$\makediff{\bulletsize}%
@@ -575,7 +606,6 @@
     }
   }{}
 }{}
-
 \newenvironment{scnrelfromlist}[1]{%
   \par\settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
@@ -585,45 +615,40 @@
     \end{scnlist}
   \end{scnindent}
 }
-
 \newenvironment{scnreltolist}[1]{%
   \par\settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
     \settab\sethind%
     \begin{scnlist}%
 }{
-    \end{scnlist} 
+    \end{scnlist}
   \end{scnindent}
 }
-
 \newenvironment{scnrelbothlist}[1]{%
   \par\settab$\bm{\Leftrightarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
     \settab\sethind%
     \begin{scnlist}%
 }{
-    \end{scnlist} 
+    \end{scnlist}
   \end{scnindent}
 }
-
 \RequirePackage{xparse}
 \NewDocumentEnvironment{set}{mm}
 {#1}
 {#2}
-
 \newenvironment{scnstruct}
 {\begin{set}{\scnstartstruct}{\scnendstruct}}
 {\end{set}}
-
 \newenvironment{scnsubstruct}
 {\begin{set}{\scnstartsubstruct}{\scnendstruct}}
 {\end{set}}
 
-\NewDocumentEnvironment{scnset}{o}
+\NewDocumentEnvironment{scnsetenv}{o}
 {\begin{set}{\scnstartset[#1]}{\scnendstruct[#1]}}
 {\end{set}}
 
-\NewDocumentEnvironment{scnvector}{o}
+\NewDocumentEnvironment{scnvectorenv}{o}
 {\begin{set}{\scnstartvector[#1]}{\scnendvector[#1]}}
 {\end{set}}
 
@@ -631,27 +656,45 @@
 {\begin{set}{\scnstarthierstruct[#1]}{\scnendhierstruct[#1]}}
 {\end{set}}
 
+\newenvironment{scnset}{%
+  \par\settab\sethind%
+  \begin{scnsetenv}%
+    \begin{scnlist}[local]%
+}{
+    \end{scnlist}
+  \end{scnsetenv}
+}
+
 \newenvironment{scnrelfromset}[1]{%
   \par\settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
     \settab\sethind%
-    \begin{scnset}%
+    \begin{scnsetenv}%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnset}
+    \end{scnsetenv}
   \end{scnindent}
+}
+
+\newenvironment{scnvector}{%
+  \par\settab\sethind%
+  \begin{scnvectorenv}%
+    \begin{scnlist}[local]%
+}{
+    \end{scnlist}
+  \end{scnvectorenv}
 }
 
 \newenvironment{scnrelfromvector}[1]{%
   \par\settab$\bm{\Rightarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
     \settab\sethind%
-    \begin{scnvector}%
+    \begin{scnvectorenv}%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnvector}
+    \end{scnvectorenv}
   \end{scnindent}
 }
 
@@ -659,11 +702,11 @@
   \settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
     \settab\sethind
-    \begin{scnset}%
+    \begin{scnsetenv}%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnset}
+    \end{scnsetenv}
   \end{scnindent}
 }
 
@@ -671,11 +714,11 @@
   \par\settab$\bm{\Leftarrow}$\makediff{\arrowsize}\scnrel{#1}
   \begin{scnindent}%
     \settab\sethind
-    \begin{scnvector}%
+    \begin{scnvectorenv}%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnvector}
+    \end{scnvectorenv}
   \end{scnindent}
 }
 
@@ -688,16 +731,15 @@
     \end{scnlist}
   \end{scnindent}
 }
-
 \newenvironment{scnhaselementset}{%
   \par\settab$\bm{\ni}$\makediff{\insize}%
   \begin{scnindent}%
     \settab\sethind%
-    \begin{scnset}[local]%
+    \begin{scnsetenv}[local]%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnset}
+    \end{scnsetenv}
   \end{scnindent}
 }
 
@@ -705,11 +747,11 @@
   \par\settab$\bm{\ni}$\makediff{\insize}%
   \begin{scnindent}%
     \settab\sethind
-    \begin{scnvector}[local]
+    \begin{scnvectorenv}[local]
       \begin{scnlist}[local]
 }{
       \end{scnlist}
-    \end{scnvector}
+    \end{scnvectorenv}
   \end{scnindent}
 }
 
@@ -717,11 +759,11 @@
   \par\settab$\bm{=}$\makediff{\eqsize}%
   \begin{scnindent}%
     \settab\sethind%
-    \begin{scnset}[local]%
+    \begin{scnsetenv}[local]%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnset}
+    \end{scnsetenv}
   \end{scnindent}
 }
 
@@ -729,11 +771,11 @@
   \par\settab$\bm{=}$\makediff{\eqsize}%
   \begin{scnindent}%
     \settab\sethind%
-    \begin{scnvector}[local]%
+    \begin{scnvectorenv}[local]%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnvector}
+    \end{scnvectorenv}
   \end{scnindent}
 }
 
@@ -741,11 +783,11 @@
   \par\settab$\bm{\supset=}$\makediff{\substructsize}%
   \begin{scnindent}%
     \settab\sethind%
-    \begin{scnset}[local]%
+    \begin{scnsetenv}[local]%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnset}
+    \end{scnsetenv}
   \end{scnindent}
 }
 
@@ -753,14 +795,13 @@
   \par\settab$\bm{\supset}$\makediff{\subsetsize}%
   \begin{scnindent}%
     \settab\sethind%
-    \begin{scnset}[local]%
+    \begin{scnsetenv}[local]%
       \begin{scnlist}[local]%
 }{
       \end{scnlist}
-    \end{scnset}
+    \end{scnsetenv}
   \end{scnindent}
 }
 
 % ENVIRONMENTS End
 \endinput
-
