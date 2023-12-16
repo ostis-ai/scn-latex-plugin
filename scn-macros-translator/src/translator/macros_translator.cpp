@@ -62,6 +62,11 @@ bool MacrosTranslator::TranslateFile(
 std::string MacrosTranslator::TranslateText(std::string const &filePath)
 {
     std::ifstream file(filePath, std::ios_base::in);
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Failed to open file: " + filePath);
+    }
+
     antlr4::ANTLRInputStream input(file);
     SCnTexLexer lexer(&input);
 
@@ -74,8 +79,10 @@ std::string MacrosTranslator::TranslateText(std::string const &filePath)
     }
     catch (...)
     {
+        file.close();
         throw;
     }
     file.close();
+
     return ctx->resultText;
 }
