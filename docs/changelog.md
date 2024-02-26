@@ -14,9 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2022-10-10
 ### Added
-- `scn.sty` file contains macros to represent knowledge in [SCn-code](https://github.com/ostis-ai/ostis-project)
-- `scndocument.cls` file contains style for documents written fully in [SCn-code](https://github.com/ostis-ai/ostis-project)
-- `docs` folder contains plugin documentation in [SCn-code](https://github.com/ostis-ai/ostis-project) and this CHANGELOG
+- `scn.sty` file contains macros to represent knowledge in [SCn-code](https://github.com/ostis-ai)
+- `scndocument.cls` file contains style for documents written fully in [SCn-code](https://github.com/ostis-ai)
+- `docs` folder contains plugin documentation in [SCn-code](https://github.com/ostis-ai) and this CHANGELOG
 - `tests` folder containing exmaples of all macros
 - `Dockerfile` to build image with macros installed
 - `README.md` with brief plugin overview
