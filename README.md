@@ -1,6 +1,6 @@
 ## SCn-LaTeX plugin
 
-This repository contains LaTeX plugin to represent knowledge in [SCn code](https://github.com/ostis-ai/ostis-project).
+This repository contains LaTeX plugin to represent knowledge in [SCn code](https://github.com/ostis-ai).
 
 ### Installation
 
